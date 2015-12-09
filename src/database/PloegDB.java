@@ -102,7 +102,7 @@ public class PloegDB {
     }
 
     public Ploeg zoekPloeg(Ploeg p) throws DBException, ApplicationException {
-        Ploeg returnPloeg = zoekPloeg(p.getId());
+        Ploeg returnPloeg = zoekPloeg(p.getNaam());
         return returnPloeg;
 
     }
@@ -186,7 +186,7 @@ public class PloegDB {
     }
 
     public Persoon getTrainer(Ploeg p) throws DBException, ApplicationException {
-        return getTrainer(p.getId());
+        return getTrainer(p.getNaam());
     }
 
     public Persoon getTrainer(String ploegnaam) throws DBException, ApplicationException {
@@ -267,7 +267,7 @@ public class PloegDB {
     //Ruben
     public void verwijderPloeg(Ploeg p) throws DBException {
 
-        verwijderPloeg(p.getId());
+        verwijderPloeg(p.getNaam());
 
     }
 
@@ -437,7 +437,7 @@ public class PloegDB {
     }
 
     public void verwijderSpelerPloeg(Persoon p) throws DBException, ApplicationException {
-        verwijderSpelerPloeg(p.getId());
+        verwijderSpelerPloeg(p.getNaam(),p.getVoornaam());
     }
 
     public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException, ApplicationException {
@@ -469,25 +469,7 @@ public class PloegDB {
     }
 
     public void toevoegenTrainerPloeg(Persoon persoon, Ploeg ploeg) throws DBException, ApplicationException {
-        // connectie tot stand brengen (en automatisch sluiten)
-        try (Connection conn = ConnectionManager.getConnection();) {
-            // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement(
-                    "UPDATE ploeg set trainer_id=? where id=?");) {
-                stmt.setInt(1, persoon.getId());
-                stmt.setInt(2, ploeg.getId());
-
-                stmt.execute();
-
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgeven persoon of ploeg kon niet worden gevonden");
-            } catch (SQLException sqlEx) {
-                throw new DBException("SQL-exception in toevoegenTrainerPloeg(PersoonBag persoon,PloegBag ploeg) - statement" + sqlEx);
-            }
-        } catch (SQLException sqlEx) {
-            throw new DBException(
-                    "SQL-exception in toevoegenTrainerPloeg(PersoonBag persoon,PloegBag ploeg) - connection" + sqlEx);
-        }
+       toevoegenTrainerPloeg(persoon.getNaam(),persoon.getVoornaam(),ploeg.getNaam());
     }
 
     public void toevoegenTrainerPloeg(String naam, String voornaam, String ploegnaam) throws DBException, ApplicationException {
@@ -519,7 +501,7 @@ public class PloegDB {
     }
 
     public void verwijderTrainerPloeg(Ploeg p) throws DBException, ApplicationException {
-        verwijderTrainerPloeg(p.getId());
+        verwijderTrainerPloeg(p.getNaam());
     }
 
     public void verwijderTrainerPloeg(String ploegnaam) throws DBException, ApplicationException {

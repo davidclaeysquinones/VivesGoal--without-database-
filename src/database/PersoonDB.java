@@ -156,10 +156,11 @@ public class PersoonDB {
     }
 
     public Persoon zoekPersoon(Persoon p) throws DBException, ApplicationException {
-        Persoon a = zoekPersoon(p.getId());
+        Persoon a = zoekPersoon(p.getNaam(),p.getVoornaam());
         return a;
     }
-
+    
+    
     // debugged method
     public ArrayList<Persoon> zoekAlleTrainers() throws DBException, ApplicationException {
 
@@ -336,7 +337,7 @@ public class PersoonDB {
 //   debugged method
 
     public void verwijderPersoon(Persoon p) throws DBException, ApplicationException {
-        verwijderPersoon(p.getId());
+        verwijderPersoon(p.getNaam(),p.getVoornaam());
     }
 
     //   debugged method
