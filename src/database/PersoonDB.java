@@ -257,7 +257,7 @@ public class PersoonDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where trainer=\"false\" and id in (select speler from ploegpersoon where ploeg in(select id from ploeg where naam='?')) order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where trainer=\"false\" and ploeg_id in(select id from ploeg where naam=?) order by naam,voornaam");) {
                 stmt.setString(1, ploegnaam);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
@@ -294,7 +294,7 @@ public class PersoonDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where trainer=\"false\" and ploeg_id=? order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where trainer=\"false\" and ploeg_id in(select id from ploeg where id=?) order by naam,voornaam");) {
                 stmt.setInt(1, id);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
