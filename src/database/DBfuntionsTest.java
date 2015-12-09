@@ -65,6 +65,7 @@ public class DBfuntionsTest {
         
         ArrayList speler=new ArrayList();
         ArrayList trainer=new ArrayList();
+        ArrayList personen=new ArrayList();
         PloegDB ploegDB = new PloegDB();
         PersoonDB persoonDB = new PersoonDB();
         
@@ -81,6 +82,7 @@ public class DBfuntionsTest {
         }
         
         try{
+            personen=persoonDB.zoekAllePersonen();
             speler=persoonDB.zoekAlleSpelers();
             trainer=persoonDB.zoekAlleTrainers();
             System.out.println("Spelers en trainers opslaan in apparte ArrayList"+"\n");
