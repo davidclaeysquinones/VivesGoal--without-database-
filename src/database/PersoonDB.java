@@ -161,7 +161,6 @@ public class PersoonDB {
     }
 
     // debugged method
-
     public ArrayList<Persoon> zoekAlleTrainers() throws DBException, ApplicationException {
 
         ArrayList<Persoon> kl = new ArrayList<>();
@@ -251,13 +250,44 @@ public class PersoonDB {
 
     }
 
+    public void verwijderAllePersonen() throws DBException {
+        // connectie tot stand brengen (en automatisch sluiten)
+        try (Connection conn = ConnectionManager.getConnection();) {
+            // preparedStatement opstellen (en automtisch sluiten)
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "update persoon set ploeg_id=null");) {
+
+                stmt.execute();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "update ploeg set trainer_id=NULL");) {
+
+                // execute voert elke sql-statement uit, executeQuery enkel de select
+                stmt.execute();
+
+            }
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM persoon");) {
+
+                // execute voert elke sql-statement uit, executeQuery enkel de select
+                stmt.execute();
+
+            } catch (SQLException sqlEx) {
+                throw new DBException("SQL-exception in verwijderAllePersonen() - statement" + sqlEx);
+            }
+        } catch (SQLException sqlEx) {
+            throw new DBException(
+                    "SQL-exception in verwijderAllePersonen() - connection" + sqlEx);
+        }
+    }
 
     //   debugged method
+
     public void verwijderPersoon(int id) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
-         // preparedStatement opstellen (en automtisch sluiten)
+            // preparedStatement opstellen (en automtisch sluiten)
 
             try (PreparedStatement stmt = conn.prepareStatement(
                     "update persoon set ploeg_id=null where id=?");) {
@@ -293,7 +323,7 @@ public class PersoonDB {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
-         // preparedStatement opstellen (en automtisch sluiten)
+            // preparedStatement opstellen (en automtisch sluiten)
 
             Persoon a = zoekPersoon(naam, voornaam);
             verwijderPersoon(a);
@@ -462,7 +492,6 @@ public class PersoonDB {
     }
 
     //   debugged
-
     /**
      * Deze methode neemt de naam en voornaam van de persoon waarvan je de
      * gegevens wilt wijzigen. Het Persoon object heeft alle gegevens die je

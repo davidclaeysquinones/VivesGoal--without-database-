@@ -14,10 +14,10 @@ import java.util.*;
  */
 public class PloegDB {
 
-    private PersoonDB persoon;
+    private PersoonDB persoonDB;
 
     public PloegDB() {
-        persoon = new PersoonDB();
+        persoonDB = new PersoonDB();
     }
 
     public Ploeg zoekPloeg(int id) throws DBException, ApplicationException {
@@ -61,7 +61,6 @@ public class PloegDB {
     }
 
     // debugged method
-
     public Ploeg zoekPloeg(String naam) throws DBException, ApplicationException {
         Ploeg returnPloeg = null;
         // connectie tot stand brengen (en automatisch sluiten)
@@ -268,27 +267,7 @@ public class PloegDB {
     //Ruben
     public void verwijderPloeg(Ploeg p) throws DBException {
 
-        // connectie tot stand brengen (en automatisch sluiten)
-        try (Connection conn = ConnectionManager.getConnection();) {
-            // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement(
-                    "update persoon set ploeg_id = NULL where ploeg_id = ?");) {
-                stmt.setInt(1, p.getId());
-                stmt.execute();
-            }
-            // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement(
-                    "delete from ploeg where id=?");) {
-                stmt.setInt(1, p.getId());
-
-                stmt.execute();
-            } catch (SQLException sqlEx) {
-                throw new DBException("SQL-exception in verwijderPloeg(PloegBag p) - statement" + sqlEx);
-            }
-        } catch (SQLException sqlEx) {
-            throw new DBException(
-                    "SQL-exception in verwijderPloeg(PloegBag p) - connection" + sqlEx);
-        }
+        verwijderPloeg(p.getId());
 
     }
 
@@ -397,7 +376,16 @@ public class PloegDB {
     }
 //   debugged
 
-    public void toevoegenSpelerPloeg(String ploegnaam, Persoon p) throws DBException, ApplicationException {
+    /**
+     * Het Persoon object moet een bestaand naam en voornaam hebben
+     *
+     * @param ploegnaam
+     * @param persoon
+     * @throws DBException
+     * @throws ApplicationException
+     */
+    public void toevoegenSpelerPloeg(String ploegnaam, Persoon persoon) throws DBException, ApplicationException {
+        Persoon p = persoonDB.zoekPersoon(persoon.getNaam(), persoon.getVoornaam());
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
@@ -422,14 +410,14 @@ public class PloegDB {
 
     public void toevoegenSpelerPloeg(Ploeg ploeg, Persoon speler) throws DBException, ApplicationException {
 
-        toevoegenSpelerPloeg(ploeg.getId(), speler.getId());
+        toevoegenSpelerPloeg(ploeg.getNaam(), speler);
     }
 
     public void verwijderSpelerPloeg(int id) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
-         // preparedStatement opstellen (en automtisch sluiten)
+            // preparedStatement opstellen (en automtisch sluiten)
 
             try (PreparedStatement stmt = conn.prepareStatement(
                     "update persoon set ploeg_id=null where id=?;");) {
@@ -454,7 +442,7 @@ public class PloegDB {
 
     public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException, ApplicationException {
 
-        Persoon p = persoon.zoekPersoon(naam, voornaam);
+        Persoon p = persoonDB.zoekPersoon(naam, voornaam);
         verwijderSpelerPloeg(p);
     }
 
@@ -503,7 +491,7 @@ public class PloegDB {
     }
 
     public void toevoegenTrainerPloeg(String naam, String voornaam, String ploegnaam) throws DBException, ApplicationException {
-        Persoon p = persoon.zoekPersoon(naam, voornaam);
+        Persoon p = persoonDB.zoekPersoon(naam, voornaam);
         Ploeg ploeg = zoekPloeg(ploegnaam);
         toevoegenTrainerPloeg(p, ploeg);
     }
@@ -562,7 +550,7 @@ public class PloegDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where trainer=\"false\" and ploeg_id in(select id from ploeg where naam=?) order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where naam=?) order by naam,voornaam");) {
                 stmt.setString(1, ploegnaam);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
@@ -599,7 +587,7 @@ public class PloegDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where trainer=\"false\" and ploeg_id in(select id from ploeg where id=?) order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where id=?) order by naam,voornaam");) {
                 stmt.setInt(1, id);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
@@ -632,7 +620,7 @@ public class PloegDB {
 
     public ArrayList<Persoon> zoekSpelersPloeg(Ploeg p) throws DBException, ApplicationException {
 
-        ArrayList<Persoon> kl = zoekSpelersPloeg(p.getId());
+        ArrayList<Persoon> kl = zoekSpelersPloeg(p.getNaam());
         return kl;
 
     }

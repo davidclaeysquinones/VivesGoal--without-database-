@@ -9,6 +9,7 @@ import databag.Ploeg;
 import database.PersoonDB;
 import database.PloegDB;
 import datatype.Categorie;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,10 +43,12 @@ public class PloegDBTest {
     
     /**
      *
+     * @throws java.lang.Exception
      */
     @After
     public void tearDown() throws Exception {
         ploegDB.verwijderAllePloegen();
+        persoonDB.verwijderAllePersonen();
     }
 
     // TODO add test methods here.
@@ -177,6 +180,37 @@ public class PloegDBTest {
     public void verwijderAllePloegen() throws Exception
      {
         ploegDB.verwijderAllePloegen();
+    }
+    
+    @Test
+    public void SpelersZoekenVanPLoeg()throws Exception
+    {
+        Persoon a =  new Persoon();
+        a.setGeboortedatum(1980,3,21);
+        a.setNaam("Visiao");
+        a.setVoornaam("Messi");
+        
+        Persoon b = new Persoon();
+        b.setGeboortedatum(1979, 6, 13);
+        b.setNaam("Plumita");
+        b.setVoornaam("Ronaldo");
+        
+        persoonDB.toevoegenPersoon(a);
+        persoonDB.toevoegenPersoon(b);
+        
+        Ploeg p = new Ploeg();
+        p.setNaam("Los farsantes");
+        p.setCategorie(Categorie.U9);
+        ploegDB.toevoegenPloeg(p);
+        ploegDB.toevoegenSpelerPloeg(p, a);
+        ploegDB.toevoegenSpelerPloeg(p, b);
+        
+        ArrayList array=ploegDB.zoekSpelersPloeg(p);
+        
+        for(int i=0;i<array.size();i++)
+        {
+            System.out.println(array.get(i));
+        }
     }
     
 }
