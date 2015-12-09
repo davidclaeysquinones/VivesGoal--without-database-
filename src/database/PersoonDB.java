@@ -56,15 +56,15 @@ public class PersoonDB {
                             throw new ApplicationException("Er werden geen personen gevonden");
                         } catch (SQLException sqlEx) {
                             throw new DBException(
-                                    "SQL-exception in zoekAlleTrainers - resultset" + sqlEx);
+                                    "SQL-exception in zoekAllePersonen() - resultset" + sqlEx);
                         }
                     } catch (SQLException sqlEx) {
                         throw new DBException(
-                                "SQL-exception in zoekAlleTrainers - statement" + sqlEx);
+                                "SQL-exception in zoekAllePersonen() - statement" + sqlEx);
                     }
         } catch (SQLException sqlEx) {
             throw new DBException(
-                    "SQL-exception in zoekAlleTrainers - connection" + sqlEx);
+                    "SQL-exception in zoekAllePersonen() - connection" + sqlEx);
         }
         return kl;
     }
