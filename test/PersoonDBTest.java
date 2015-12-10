@@ -48,18 +48,7 @@ public class PersoonDBTest {
     public void tearDown() throws DBException, ApplicationException {
         
         
-        ArrayList spelers = persoonDB.zoekAlleSpelers();
-        ArrayList trainers= persoonDB.zoekAlleTrainers();
-        
-        for(int i = 0;i<spelers.size();i++)
-        {
-            persoonDB.verwijderPersoon((Persoon) spelers.get(i));
-        }
-        
-        for(int i = 0;i<trainers.size();i++)
-        {
-            persoonDB.verwijderPersoon((Persoon) trainers.get(i));
-        }
+        persoonDB.verwijderAllePersonen();
     }
 
     // TODO add test methods here.
@@ -107,11 +96,11 @@ public class PersoonDBTest {
     public void AllePersonen() throws Exception
     {
         
-        ArrayList speler=new ArrayList();
-        ArrayList trainer=new ArrayList();
+        ArrayList spelers=new ArrayList();
+      
         
-        speler=persoonDB.zoekAlleSpelers();
-        trainer=persoonDB.zoekAlleTrainers();
+        spelers=persoonDB.zoekAllePersonen();
+        
        
       
     }
@@ -147,18 +136,7 @@ public class PersoonDBTest {
     @Test
     public void verwijderAllePersonen() throws Exception
     {
-        ArrayList spelers = persoonDB.zoekAlleSpelers();
-        ArrayList trainers= persoonDB.zoekAlleTrainers();
-        
-        for(int i = 0;i<spelers.size();i++)
-        {
-            persoonDB.verwijderPersoon((Persoon) spelers.get(i));
-        }
-        
-        for(int i = 0;i<trainers.size();i++)
-        {
-            persoonDB.verwijderPersoon((Persoon) trainers.get(i));
-        }
+        persoonDB.verwijderAllePersonen();
     }
     
    @Test
