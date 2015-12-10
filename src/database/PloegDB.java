@@ -250,7 +250,7 @@ public class PloegDB {
             } else {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO ploeg (`naam`, `niveau`) VALUES (?,?)");) {
-                    stmt.setString(1, p.getNaam());
+                    stmt.setString(1, genereerPloegNaam(p));
                     stmt.setString(2, p.getCategorie().getTekst());
 
                     stmt.execute();

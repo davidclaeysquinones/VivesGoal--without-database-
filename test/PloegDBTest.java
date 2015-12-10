@@ -47,8 +47,8 @@ public class PloegDBTest {
      */
     @After
     public void tearDown() throws Exception {
-        ploegDB.verwijderAllePloegen();
-        persoonDB.verwijderAllePersonen();
+//        ploegDB.verwijderAllePloegen();
+//        persoonDB.verwijderAllePersonen();
     }
 
     // TODO add test methods here.
@@ -71,7 +71,6 @@ public class PloegDBTest {
         persoonDB.toevoegenPersoon(drie);
         
         Ploeg ploeg=new Ploeg();
-        ploeg.setNaam("los papis");
         ploeg.setCategorie(Categorie.U6);
         
         Persoon p = persoonDB.zoekPersoon(drie.getNaam(),drie.getVoornaam());
@@ -86,8 +85,7 @@ public class PloegDBTest {
     public void toevoegenPloeg() throws Exception
     {
         Ploeg ploeg=new Ploeg();
-        ploeg.setNaam("los papasitos");
-        ploeg.setCategorie(Categorie.U6);
+        ploeg.setCategorie(Categorie.U7);
        
         ploegDB.toevoegenPloeg(ploeg);
         
@@ -98,8 +96,7 @@ public class PloegDBTest {
     public void koppelenTrainerAanPloeg() throws Exception
     {
         Ploeg ploeg = new Ploeg();
-        ploeg.setCategorie(Categorie.U7);
-        ploeg.setNaam("los chungitos");
+        ploeg.setCategorie(Categorie.U8);
         ploegDB.toevoegenPloeg(ploeg);
         Persoon drie=new Persoon();
         drie.setVoornaam("Rubensito");
@@ -112,7 +109,7 @@ public class PloegDBTest {
         persoonDB.toevoegenPersoon(drie);
     
         
-        ploeg = ploegDB.zoekPloeg("los chungitos");
+        ploeg = ploegDB.zoekPloeg("U8a");
         ploegDB.toevoegenTrainerPloeg(persoonDB.zoekPersoon("Chulito", "Rubensito"), ploeg);
       
        
@@ -137,14 +134,13 @@ public class PloegDBTest {
      
         
         Ploeg ploeg=new Ploeg();
-        ploeg.setNaam("markisito");
         ploeg.setCategorie(Categorie.U11);
         
         ploegDB.toevoegenPloeg(ploeg);
        
-        ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg(ploeg.getNaam()),persoonDB.zoekPersoon(een.getNaam(), een.getVoornaam()));
+        ploegDB.toevoegenSpelerPloeg("U11a",persoonDB.zoekPersoon(een.getNaam(), een.getVoornaam()));
        
-        ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg(ploeg.getNaam()),persoonDB.zoekPersoon(twee.getNaam(),twee.getVoornaam()) );
+        ploegDB.toevoegenSpelerPloeg("U11a",persoonDB.zoekPersoon(twee.getNaam(),twee.getVoornaam()) );
         
         
     }
@@ -163,13 +159,12 @@ public class PloegDBTest {
        
         
         Ploeg ploeg = new Ploeg();
-        ploeg.setNaam("apllesito");
-        ploeg.setCategorie(Categorie.U8);
+        ploeg.setCategorie(Categorie.U10);
         
         ploegDB.toevoegenPloeg(ploeg);
         
 //        
-        ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg(ploeg.getNaam()), persoonDB.zoekPersoon(een.getNaam(),een.getVoornaam()));
+        ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg("U10a"), persoonDB.zoekPersoon(een.getNaam(),een.getVoornaam()));
        
         ploegDB.verwijderSpelerPloeg(een.getNaam(),een.getVoornaam());
         
