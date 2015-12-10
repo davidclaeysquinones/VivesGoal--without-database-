@@ -475,7 +475,7 @@ public class PloegDB {
     public void toevoegenTrainerPloeg(String naam, String voornaam, String ploegnaam) throws DBException, ApplicationException {
         Persoon p = persoonDB.zoekPersoon(naam, voornaam);
         Ploeg ploeg = zoekPloeg(ploegnaam);
-        toevoegenTrainerPloeg(p, ploeg);
+        toevoegenTrainerPloeg(p.getId(), ploeg.getId());
     }
 
     public void verwijderTrainerPloeg(int ploegid) throws DBException, ApplicationException {
