@@ -606,5 +606,41 @@ public class PloegDB {
         return kl;
 
     }
+    
+    public ArrayList<Ploeg> zoekPloegenTrainer(int trainer_id) throws DBException, ApplicationException{
+        ArrayList<Ploeg> kl = new ArrayList<>();
+      // connectie tot stand brengen (en automatisch sluiten)
+      try (Connection conn = ConnectionManager.getConnection();) {
+         // preparedStatement opstellen (en automtisch sluiten)
+         try (PreparedStatement stmt = conn.prepareStatement("select id, naam, niveau, trainer_id from ploeg where trainer_id=?");) {
+            stmt.setInt(1, trainer_id);
+            // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
+            stmt.execute();
+            // result opvragen (en automatisch sluiten)
+            try (ResultSet r = stmt.getResultSet()) {
+               // van alle spelers uit de database Ploeg-objecten maken
+          
+
+               while (r.next()) {
+                  Ploeg k = new Ploeg();
+                  k.setId(r.getInt("id"));
+                  k.setNaam(r.getString("naam"));
+                  k.setCategorie(r.getString("niveau"));
+                  k.setTrainer(r.getInt("trainer_id"));
+                  kl.add(k);
+               }
+               return kl;
+            } catch (SQLException sqlEx) {
+               throw new DBException(
+                  "SQL-exception in zoekPloegenTrainer(int trainer_id) - resultset"+ sqlEx);
+            }
+         } catch (SQLException sqlEx) {
+            throw new DBException("SQL-exception in zoekPloegenTrainer(int trainer_id) - statement"+ sqlEx);
+         }
+      } catch (SQLException sqlEx) {
+         throw new DBException(
+            "SQL-exception in zoekPloegenTrainer(int trainer_id) - connection"+ sqlEx);
+      }
+    }
 
 }
