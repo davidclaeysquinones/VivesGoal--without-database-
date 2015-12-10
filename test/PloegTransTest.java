@@ -9,7 +9,10 @@ import datatype.Categorie;
 import databag.Ploeg;
 import database.PersoonDB;
 import database.PloegDB;
+import exception.DBException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,7 +35,8 @@ public class PloegTransTest {
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() throws DBException {
+
     }
     
     @Before
@@ -52,22 +56,11 @@ public class PloegTransTest {
         }
         
         PersoonDB persoon = new PersoonDB();
-        ArrayList<Persoon> personen=new ArrayList<>();
-        try{
-            personen=persoon.zoekAllePersonen();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        
-        for (Persoon personen1 : personen) {
-            try {
-                persoon.verwijderPersoon(personen1);
-            }catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
+       
+        try {
+            persoon.verwijderAllePersonen();
+        } catch (DBException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -132,7 +125,7 @@ public class PloegTransTest {
     public void DubbelePloeg() throws Exception
     {
         Ploeg a=new Ploeg();
-        a.setNaam("woensdag");
+        a.setNaam("U6a");
         a.setCategorie(Categorie.U6);
         Ploeg b=new Ploeg();
         b.setNaam("woensdag");
