@@ -213,4 +213,32 @@ public class PloegDBTest {
         }
     }
     
+    @Test
+    
+    public void zoekPloegenCategorie()throws Exception
+    {
+        Ploeg a = new Ploeg();
+        a.setNaam("hd");
+        a.setCategorie(Categorie.U6);
+        
+        Ploeg b = new Ploeg();
+        b.setNaam("hdeee");
+        b.setCategorie(Categorie.U6);
+        
+        Ploeg c = new Ploeg();
+        c.setNaam("haadeee");
+        c.setCategorie(Categorie.U7);
+        
+        ploegDB.toevoegenPloeg(a);
+        ploegDB.toevoegenPloeg(b);
+        ploegDB.toevoegenPloeg(c);
+        
+        ArrayList ploegen = new ArrayList();
+        ploegen=ploegDB.zoekPloegenCategorie(Categorie.U6);
+        
+        for(int i=0;i<ploegen.size();i++)
+        {
+            System.out.println(ploegen.get(i));
+        }
+    }
 }
