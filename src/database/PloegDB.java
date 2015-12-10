@@ -9,7 +9,6 @@ import datatype.Categorie;
 import exception.*;
 import java.sql.*;
 import java.util.*;
-import java.lang.StringBuilder;
 
 /**
  * Bevat alle functionaliteiten voor de database
