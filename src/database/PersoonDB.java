@@ -322,17 +322,10 @@ public class PersoonDB {
 
     public void verwijderPersoon(String naam, String voornaam) throws DBException, ApplicationException {
 
-        // connectie tot stand brengen (en automatisch sluiten)
-        try (Connection conn = ConnectionManager.getConnection();) {
-            // preparedStatement opstellen (en automtisch sluiten)
-
             Persoon a = zoekPersoon(naam, voornaam);
-            verwijderPersoon(a);
+            verwijderPersoon(a.getId());
 
-        } catch (SQLException sqlEx) {
-            throw new DBException(
-                    "SQL-exception in verwijderPersoon(String naam,String voornaam) - connection" + sqlEx);
-        }
+      
     }
 //   debugged method
 

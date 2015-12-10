@@ -233,7 +233,8 @@ public class DBfuntionsTest {
         {
            
             try{
-            persoonDB.verwijderPersoon((Persoon)trainer.get(i));
+            Persoon a=(Persoon)trainer.get(i);    
+            persoonDB.verwijderPersoon(a);
             if(i==0)
             {
                 System.out.println("verwijderen trainers"+"\n");
@@ -242,7 +243,7 @@ public class DBfuntionsTest {
         }
         catch(DBException|ApplicationException   e1)
         {
-            System.out.println("fout bij verwijderen trainera"+e1.getMessage());
+            System.out.println("fout bij verwijderen trainer"+e1.getMessage());
         }
         }
        
