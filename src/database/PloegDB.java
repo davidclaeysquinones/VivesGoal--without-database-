@@ -239,7 +239,7 @@ public class PloegDB {
             if (p.getTrainer() != null) {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO ploeg (`naam`, `niveau`, `trainer_id`) VALUES (?,?,?)");) {
-                    stmt.setString(1, genereerPloegNaam(p));
+                    stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
                     stmt.setInt(3, p.getTrainer());
 
@@ -250,7 +250,7 @@ public class PloegDB {
             } else {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO ploeg (`naam`, `niveau`) VALUES (?,?)");) {
-                    stmt.setString(1, genereerPloegNaam(p));
+                    stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
 
                     stmt.execute();
@@ -682,14 +682,5 @@ public class PloegDB {
       }
     }
     
-    private String genereerPloegNaam(Ploeg p) throws ApplicationException, DBException
-    {
-        StringBuilder sb=new StringBuilder();
-        sb.append(p.getCategorie().getTekst());
-        int aantal = zoekPloegenCategorie(p.getCategorie()).size();
-        aantal+=1+96;
-        sb.append(Character.toString((char)aantal));
-        return sb.toString();
-        
-    }
+    
 }

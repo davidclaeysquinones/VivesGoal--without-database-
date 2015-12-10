@@ -106,6 +106,7 @@ public class DBfuntionsTest {
         
         
         Ploeg ploeg=new Ploeg();
+        ploeg.setNaam("los chungos");
         ploeg.setCategorie(Categorie.U6);
         try{
             Persoon p = persoonDB.zoekPersoon(drie.getNaam(),drie.getVoornaam());
@@ -131,9 +132,9 @@ public class DBfuntionsTest {
         }
         
         try{
-           ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg("U6a"),persoonDB.zoekPersoon(een.getNaam(), een.getVoornaam()));
-            Ploeg p=ploegDB.zoekPloeg("U6a");
-            ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg("U6a"),persoonDB.zoekPersoon(twee.getNaam(),twee.getVoornaam()) );
+           ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg(ploeg.getNaam()),persoonDB.zoekPersoon(een.getNaam(), een.getVoornaam()));
+            Ploeg p=ploegDB.zoekPloeg(ploeg.getNaam());
+            ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg(ploeg.getNaam()),persoonDB.zoekPersoon(twee.getNaam(),twee.getVoornaam()) );
             System.out.println("toevoegen spelers aan ploeg"+"\n");
         }
         catch ( DBException|ApplicationException e)
@@ -142,7 +143,7 @@ public class DBfuntionsTest {
         }
         
         try{
-            ploegDB.toevoegenTrainerPloeg(drie.getNaam(),drie.getVoornaam(),"U6a");
+            ploegDB.toevoegenTrainerPloeg(drie.getNaam(),drie.getVoornaam(),ploeg.getNaam());
             System.out.println("toevoegen trainer aan ploeg"+"\n");
         }
         catch ( DBException|ApplicationException e)
@@ -181,7 +182,7 @@ public class DBfuntionsTest {
         } 
         
         try {
-            Ploeg p=ploegDB.zoekPloeg("U6a");
+            Ploeg p=ploegDB.zoekPloeg(ploeg.getNaam());
             System.out.println("opzoeken ploeg : "+p+"\n");
         }
         catch(DBException|ApplicationException e)
@@ -230,9 +231,9 @@ public class DBfuntionsTest {
         
         for(int i=0;i<trainer.size();i++)
         {
-            Persoon a = (Persoon) trainer.get(i);
+           
             try{
-            persoonDB.verwijderPersoon(a.getNaam(),a.getVoornaam());
+            persoonDB.verwijderPersoon((Persoon)trainer.get(i));
             if(i==0)
             {
                 System.out.println("verwijderen trainers"+"\n");
@@ -241,7 +242,7 @@ public class DBfuntionsTest {
         }
         catch(DBException|ApplicationException   e1)
         {
-            System.out.println("fout bij verwijderen trainer"+e1.getMessage());
+            System.out.println("fout bij verwijderen trainera"+e1.getMessage());
         }
         }
        

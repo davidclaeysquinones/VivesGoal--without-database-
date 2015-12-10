@@ -8,6 +8,7 @@ package transactie;
 import databag.Ploeg;
 import database.PloegDB;
 import exception.ApplicationException;
+import exception.DBException;
 
 
 /**
@@ -32,6 +33,7 @@ public class PloegTrans implements PloegTransInterface{
             }   
             else
             {
+                p.setNaam(genereerPloegNaam(p));
                 database.toevoegenPloeg(p);
                 return database.zoekPloeg(p.getNaam()).getId();
             }
@@ -49,6 +51,15 @@ public class PloegTrans implements PloegTransInterface{
     public void trainerKoppelenAanPloeg(int trainerId, int ploegId) throws Exception {
         database.toevoegenTrainerPloeg(trainerId, ploegId);
     }
-    
+    private String genereerPloegNaam(Ploeg p) throws ApplicationException, DBException
+    {
+        StringBuilder sb=new StringBuilder();
+        sb.append(p.getCategorie().getTekst());
+        int aantal = database.zoekPloegenCategorie(p.getCategorie()).size();
+        aantal+=1+96;
+        sb.append(Character.toString((char)aantal));
+        return sb.toString();
+        
+    }
    
 }
