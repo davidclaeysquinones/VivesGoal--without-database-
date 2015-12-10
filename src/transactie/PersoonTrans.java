@@ -7,15 +7,10 @@ package transactie;
 
 import databag.Persoon;
 import databag.Ploeg;
-import database.ConnectionManager;
 import database.PersoonDB;
 import database.PloegDB;
 import exception.ApplicationException;
 import exception.DBException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +23,7 @@ public class PersoonTrans implements PersoonTransInterface {
     private PloegDB databasePloeg = new PloegDB();
     
     @Override
-    public Integer persoonToevoegen(Persoon p) throws Exception {
+    public Integer persoonToevoegen(Persoon p) throws DBException, ApplicationException {
         //kijken of de persoon al bestaat.
         if(database.zoekPersoon(p.getId())!=null)
             {
@@ -45,7 +40,7 @@ public class PersoonTrans implements PersoonTransInterface {
     }
 
     @Override
-    public void persoonWijzigen(Persoon p) throws Exception {
+    public void persoonWijzigen(Persoon p) throws DBException, ApplicationException {
       //controleer of alle velden zijn ingevuld
       checkAlleVeldenIngevuld(p);
 
@@ -63,7 +58,7 @@ public class PersoonTrans implements PersoonTransInterface {
     }
 
     @Override
-    public void spelerVerwijderenVanPloeg(int spelerId) throws Exception {
+    public void spelerVerwijderenVanPloeg(int spelerId) throws DBException, ApplicationException {
         //kijken of de persoon bestaat.
         if(database.zoekPersoon(spelerId)==null) {
             throw new ApplicationException("De opgegeven persoon bestaat niet.");
@@ -127,7 +122,7 @@ public class PersoonTrans implements PersoonTransInterface {
     }
 
     @Override
-    public void spelerWordtTrainer(int spelerId) throws Exception {
+    public void spelerWordtTrainer(int spelerId) throws DBException, ApplicationException {
         //speler moet bestaan
         if(database.zoekPersoon(spelerId)== null) {
             throw new ApplicationException("Deze persoon bestaat niet");
@@ -135,7 +130,11 @@ public class PersoonTrans implements PersoonTransInterface {
         else {
             //speler ontkoppelen als hij in een ploeg zit. (niet noodzakkelijk)
             if(database.zoekPersoon(spelerId).getPloegid()!=null) {
-                spelerVerwijderenVanPloeg(spelerId);
+                try {
+                    spelerVerwijderenVanPloeg(spelerId);
+                } catch (Exception ex) {
+                    throw new ApplicationException("Er is iets misgelopen bij het ontkoppelen van de speler. error:" + ex.getMessage());
+                }
             }
             //speler trainer maken
             database.zoekPersoon(spelerId).setTrainer(true);
