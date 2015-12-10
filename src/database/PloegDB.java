@@ -9,6 +9,7 @@ import datatype.Categorie;
 import exception.*;
 import java.sql.*;
 import java.util.*;
+import java.lang.StringBuilder;
 
 /**
  * Bevat alle functionaliteiten voor de database
@@ -230,7 +231,7 @@ public class PloegDB {
     }
 
     //Ruben
-    public void toevoegenPloeg(Ploeg p) throws DBException {
+    public void toevoegenPloeg(Ploeg p) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -238,7 +239,7 @@ public class PloegDB {
             if (p.getTrainer() != null) {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO ploeg (`naam`, `niveau`, `trainer_id`) VALUES (?,?,?)");) {
-                    stmt.setString(1, p.getNaam());
+                    stmt.setString(1, genereerPloegNaam(p));
                     stmt.setString(2, p.getCategorie().getTekst());
                     stmt.setInt(3, p.getTrainer());
 
@@ -651,7 +652,7 @@ public class PloegDB {
       try (Connection conn = ConnectionManager.getConnection();) {
          // preparedStatement opstellen (en automtisch sluiten)
          try (PreparedStatement stmt = conn.prepareStatement("select id, naam, niveau, trainer_id from ploeg where niveau=?");) {
-            stmt.setString(1, "niveau");
+            stmt.setString(1, categorie.getTekst());
             // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
             stmt.execute();
             // result opvragen (en automatisch sluiten)
@@ -670,14 +671,25 @@ public class PloegDB {
                return kl;
             } catch (SQLException sqlEx) {
                throw new DBException(
-                  "SQL-exception in zoekPloegenTrainer(int trainer_id) - resultset"+ sqlEx);
+                  "SQL-exception in zoekPloegenCategorie(Categorie categorie) - resultset"+ sqlEx);
             }
          } catch (SQLException sqlEx) {
-            throw new DBException("SQL-exception in zoekPloegenTrainer(int trainer_id) - statement"+ sqlEx);
+            throw new DBException("SQL-exception in zoekPloegenCategorie(Categorie categorie) - statement"+ sqlEx);
          }
       } catch (SQLException sqlEx) {
          throw new DBException(
-            "SQL-exception in zoekPloegenTrainer(int trainer_id) - connection"+ sqlEx);
+            "SQL-exception in zoekPloegenCategorie(Categorie categorie) - connection"+ sqlEx);
       }
+    }
+    
+    private String genereerPloegNaam(Ploeg p) throws ApplicationException, DBException
+    {
+        StringBuilder sb=new StringBuilder();
+        sb.append(p.getCategorie().getTekst());
+        int aantal = zoekPloegenCategorie(p.getCategorie()).size();
+        aantal+=1+96;
+        sb.append(Character.toString((char)aantal));
+        return sb.toString();
+        
     }
 }

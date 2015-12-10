@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import datatype.Categorie;
 import databag.Persoon;
 import databag.Ploeg;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  Main class to test the functions of the database
  */
 public class DBfuntionsTest {
    
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ApplicationException {
         
        
    
@@ -104,7 +106,6 @@ public class DBfuntionsTest {
         
         
         Ploeg ploeg=new Ploeg();
-        ploeg.setNaam("los papis");
         ploeg.setCategorie(Categorie.U6);
         try{
             Persoon p = persoonDB.zoekPersoon(drie.getNaam(),drie.getVoornaam());
@@ -130,9 +131,9 @@ public class DBfuntionsTest {
         }
         
         try{
-           ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg(ploeg.getNaam()),persoonDB.zoekPersoon(een.getNaam(), een.getVoornaam()));
-            Ploeg p=ploegDB.zoekPloeg(ploeg.getNaam());
-            ploegDB.toevoegenSpelerPloeg(p,persoonDB.zoekPersoon(twee.getNaam(),twee.getVoornaam()) );
+           ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg("U6a"),persoonDB.zoekPersoon(een.getNaam(), een.getVoornaam()));
+            Ploeg p=ploegDB.zoekPloeg("U6a");
+            ploegDB.toevoegenSpelerPloeg(ploegDB.zoekPloeg("U6a"),persoonDB.zoekPersoon(twee.getNaam(),twee.getVoornaam()) );
             System.out.println("toevoegen spelers aan ploeg"+"\n");
         }
         catch ( DBException|ApplicationException e)
@@ -141,7 +142,7 @@ public class DBfuntionsTest {
         }
         
         try{
-            ploegDB.toevoegenTrainerPloeg(drie.getNaam(),drie.getVoornaam(),ploeg.getNaam());
+            ploegDB.toevoegenTrainerPloeg(drie.getNaam(),drie.getVoornaam(),"U6a");
             System.out.println("toevoegen trainer aan ploeg"+"\n");
         }
         catch ( DBException|ApplicationException e)
@@ -180,7 +181,7 @@ public class DBfuntionsTest {
         } 
         
         try {
-            Ploeg p=ploegDB.zoekPloeg(ploeg.getNaam());
+            Ploeg p=ploegDB.zoekPloeg("U6a");
             System.out.println("opzoeken ploeg : "+p+"\n");
         }
         catch(DBException|ApplicationException e)
@@ -244,17 +245,22 @@ public class DBfuntionsTest {
         }
         }
        
-      
-        
-        
+        try {
+            System.out.println(ploegDB.zoekPloegenCategorie(Categorie.U6).size());
+        }
+        catch (DBException ex) {
+            Logger.getLogger(DBfuntionsTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
         try{
             ploegDB.verwijderAllePloegen();
             System.out.println("Alle ploegen verwijderen");
         }
         catch ( DBException e)
         {
-            System.out.println("fout bij verwijderen trainer"+e.getMessage());
+            System.out.println("fout bij verwijderen ploegen"+e.getMessage());
         }
+        
         
      
     }
