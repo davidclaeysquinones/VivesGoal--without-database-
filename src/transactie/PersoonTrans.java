@@ -162,19 +162,10 @@ public class PersoonTrans implements PersoonTransInterface {
 
     @Override
     public void checkAlleVeldenIngevuld(Persoon p) throws DBException, ApplicationException {
-        if (p.getNaam().equals("")) {
+        if (p.getId()!=null) {
          throw new ApplicationException("Naam niet ingevuld");
       }
-      if (p.getVoornaam().equals("")) {
-         throw new ApplicationException("Voornaam niet ingevuld");
-      }
-      if (p.getGeboortedatum() == null) {
-         throw new ApplicationException("Geboortedatum niet ingevuld");
-      }
-      if (!(p.getTrainer() == true | p.getTrainer() == false)) {
-          throw new ApplicationException("Trainer niet correct ingevuld");
-      }
-      //opmerking, ploeg_id, trainer zijn optioneel.
+  
     }
 
     

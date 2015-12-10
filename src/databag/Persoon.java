@@ -14,7 +14,7 @@ import java.util.Date;
  * @author david
  */
 public class Persoon {
-    private int id;
+    private Integer id;
     private String naam;
     private String voornaam;
     private Date geboortedatum;
@@ -33,7 +33,11 @@ public class Persoon {
 
     // defaultconstructor
     // getters
-    public int getId() {
+    /**
+     * Integer datatype omdat bij aanmaak het id standaard null is
+     * @return 
+     */
+    public Integer getId() {
         return id;
     }
 
