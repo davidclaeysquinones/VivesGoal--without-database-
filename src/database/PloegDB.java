@@ -443,7 +443,7 @@ public class PloegDB {
     public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException, ApplicationException {
 
         Persoon p = persoonDB.zoekPersoon(naam, voornaam);
-        verwijderSpelerPloeg(p);
+        verwijderSpelerPloeg(p.getId());
     }
 
     public void toevoegenTrainerPloeg(int persoonid, int ploegid) throws DBException, ApplicationException {
