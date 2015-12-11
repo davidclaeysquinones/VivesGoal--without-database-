@@ -10,10 +10,8 @@ import databag.Ploeg;
 import database.PersoonDB;
 import database.PloegDB;
 import exception.ApplicationException;
-import exception.DBException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  *
@@ -29,10 +27,11 @@ public class PloegTrans implements PloegTransInterface {
         if (p.getCategorie() == null) {
             throw new ApplicationException("Elke ploeg moet een categorie hebben");
         } else {
+            String ploegnaam = genereerPloegNaam(p);
             if (p.getTrainer() != null) {
                 PersoonDB persoonDB = new PersoonDB();
                 if (persoonDB.zoekPersoon(p.getTrainer()) != null) {
-                    String ploegnaam = genereerPloegNaam(p);
+
                     p.setNaam(ploegnaam);
                     database.toevoegenPloeg(p);
                     return database.zoekPloeg(p.getNaam()).getId();
@@ -40,7 +39,7 @@ public class PloegTrans implements PloegTransInterface {
                     return null;
                 }
             } else {
-                String ploegnaam = genereerPloegNaam(p);
+
                 p.setNaam(ploegnaam);
                 database.toevoegenPloeg(p);
                 return database.zoekPloeg(p.getNaam()).getId();
@@ -83,7 +82,7 @@ public class PloegTrans implements PloegTransInterface {
 
         for (Ploeg current : a.keySet()) {
             current.setNaam(genereerPloegNaam(current));
-            database.toevoegenPloeg(current);
+            ploegToevoegen(current);
             ArrayList<Persoon> spelers = a.get(current);
             for (int j = 0; j < spelers.size(); j++) {
                 database.toevoegenSpelerPloeg(current, spelers.get(j));

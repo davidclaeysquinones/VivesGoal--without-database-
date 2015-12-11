@@ -236,20 +236,20 @@ public class PloegDB {
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
             if (p.getTrainer() != null) {
+                System.out.println(p.getTrainer() + " " + p.getNaam());
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO ploeg (`naam`, `niveau`, `trainer_id`) VALUES (?,?,?)");) {
                     stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
                     stmt.setInt(3, p.getTrainer());
-                    
-                 
+
                     stmt.execute();
                 } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in toevoegenPloeg(PloegBag p) - statement" + sqlEx);
                 }
             } else {
                 try (PreparedStatement stmt = conn.prepareStatement(
-                        "INSERT INTO ploeg (`naam`, `niveau`,`trainer_id`) VALUES (?,?,NULL)");) {
+                        "INSERT INTO ploeg (`naam`, `niveau`) VALUES (?,?)");) {
                     stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
 
@@ -278,11 +278,10 @@ public class PloegDB {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
-               
 
             // preparedStatement opstellen (en automtisch sluiten)
             try (PreparedStatement stmt = conn.prepareStatement(
-                "update persoon set ploeg_id = NULL where ploeg_id = ?");) {
+                    "update persoon set ploeg_id = NULL where ploeg_id = ?");) {
                 stmt.setInt(1, ploegid);
                 stmt.execute();
             }
@@ -308,9 +307,9 @@ public class PloegDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-                     
-                 try (PreparedStatement stmt = conn.prepareStatement(
-                 "update persoon set ploeg_id = NULL where ploeg_id in (select id from ploeg where naam=?)");) {
+
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "update persoon set ploeg_id = NULL where ploeg_id in (select id from ploeg where naam=?)");) {
                 stmt.setString(1, naam);
                 stmt.execute();
             }
@@ -442,7 +441,7 @@ public class PloegDB {
     }
 
     public void verwijderSpelerPloeg(Persoon p) throws DBException, ApplicationException {
-        verwijderSpelerPloeg(p.getNaam(),p.getVoornaam());
+        verwijderSpelerPloeg(p.getNaam(), p.getVoornaam());
     }
 
     public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException, ApplicationException {
@@ -474,13 +473,16 @@ public class PloegDB {
     }
 
     public void toevoegenTrainerPloeg(Persoon persoon, Ploeg ploeg) throws DBException, ApplicationException {
-       toevoegenTrainerPloeg(persoon.getNaam(),persoon.getVoornaam(),ploeg.getNaam());
+        if(persoon!=null && ploeg!=null)
+        {
+            toevoegenTrainerPloeg(persoon.getNaam(), persoon.getVoornaam(), ploeg.getNaam());
+        }  
     }
 
     public void toevoegenTrainerPloeg(String naam, String voornaam, String ploegnaam) throws DBException, ApplicationException {
-        Persoon p = persoonDB.zoekPersoon(naam, voornaam);
+        Persoon persoon = persoonDB.zoekPersoon(naam, voornaam);
         Ploeg ploeg = zoekPloeg(ploegnaam);
-        toevoegenTrainerPloeg(p.getId(), ploeg.getId());
+        toevoegenTrainerPloeg(persoon.getId(), ploeg.getId());
     }
 
     public void verwijderTrainerPloeg(int ploegid) throws DBException, ApplicationException {
@@ -611,79 +613,75 @@ public class PloegDB {
         return kl;
 
     }
-    
-    public ArrayList<Ploeg> zoekPloegenTrainer(int trainer_id) throws DBException, ApplicationException{
-        ArrayList<Ploeg> kl = new ArrayList<>();
-      // connectie tot stand brengen (en automatisch sluiten)
-      try (Connection conn = ConnectionManager.getConnection();) {
-         // preparedStatement opstellen (en automtisch sluiten)
-         try (PreparedStatement stmt = conn.prepareStatement("select id, naam, niveau, trainer_id from ploeg where trainer_id=?");) {
-            stmt.setInt(1, trainer_id);
-            // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
-            stmt.execute();
-            // result opvragen (en automatisch sluiten)
-            try (ResultSet r = stmt.getResultSet()) {
-               // van alle spelers uit de database Ploeg-objecten maken
-          
 
-               while (r.next()) {
-                  Ploeg k = new Ploeg();
-                  k.setId(r.getInt("id"));
-                  k.setNaam(r.getString("naam"));
-                  k.setCategorie(r.getString("niveau"));
-                  k.setTrainer(r.getInt("trainer_id"));
-                  kl.add(k);
-               }
-               return kl;
-            } catch (SQLException sqlEx) {
-               throw new DBException(
-                  "SQL-exception in zoekPloegenTrainer(int trainer_id) - resultset"+ sqlEx);
-            }
-         } catch (SQLException sqlEx) {
-            throw new DBException("SQL-exception in zoekPloegenTrainer(int trainer_id) - statement"+ sqlEx);
-         }
-      } catch (SQLException sqlEx) {
-         throw new DBException(
-            "SQL-exception in zoekPloegenTrainer(int trainer_id) - connection"+ sqlEx);
-      }
-    }
-    
-    public ArrayList<Ploeg> zoekPloegenCategorie(Categorie categorie) throws ApplicationException, DBException
-    {
+    public ArrayList<Ploeg> zoekPloegenTrainer(int trainer_id) throws DBException, ApplicationException {
         ArrayList<Ploeg> kl = new ArrayList<>();
-      // connectie tot stand brengen (en automatisch sluiten)
-      try (Connection conn = ConnectionManager.getConnection();) {
-         // preparedStatement opstellen (en automtisch sluiten)
-         try (PreparedStatement stmt = conn.prepareStatement("select id, naam, niveau, trainer_id from ploeg where niveau=?");) {
-            stmt.setString(1, categorie.getTekst());
-            // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
-            stmt.execute();
-            // result opvragen (en automatisch sluiten)
-            try (ResultSet r = stmt.getResultSet()) {
+        // connectie tot stand brengen (en automatisch sluiten)
+        try (Connection conn = ConnectionManager.getConnection();) {
+            // preparedStatement opstellen (en automtisch sluiten)
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, niveau, trainer_id from ploeg where trainer_id=?");) {
+                stmt.setInt(1, trainer_id);
+                // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
+                stmt.execute();
+                // result opvragen (en automatisch sluiten)
+                try (ResultSet r = stmt.getResultSet()) {
                // van alle spelers uit de database Ploeg-objecten maken
-          
 
-               while (r.next()) {
-                  Ploeg k = new Ploeg();
-                  k.setId(r.getInt("id"));
-                  k.setNaam(r.getString("naam"));
-                  k.setCategorie(r.getString("niveau"));
-                  k.setTrainer(r.getInt("trainer_id"));
-                  kl.add(k);
-               }
-               return kl;
+                    while (r.next()) {
+                        Ploeg k = new Ploeg();
+                        k.setId(r.getInt("id"));
+                        k.setNaam(r.getString("naam"));
+                        k.setCategorie(r.getString("niveau"));
+                        k.setTrainer(r.getInt("trainer_id"));
+                        kl.add(k);
+                    }
+                    return kl;
+                } catch (SQLException sqlEx) {
+                    throw new DBException(
+                            "SQL-exception in zoekPloegenTrainer(int trainer_id) - resultset" + sqlEx);
+                }
             } catch (SQLException sqlEx) {
-               throw new DBException(
-                  "SQL-exception in zoekPloegenCategorie(Categorie categorie) - resultset"+ sqlEx);
+                throw new DBException("SQL-exception in zoekPloegenTrainer(int trainer_id) - statement" + sqlEx);
             }
-         } catch (SQLException sqlEx) {
-            throw new DBException("SQL-exception in zoekPloegenCategorie(Categorie categorie) - statement"+ sqlEx);
-         }
-      } catch (SQLException sqlEx) {
-         throw new DBException(
-            "SQL-exception in zoekPloegenCategorie(Categorie categorie) - connection"+ sqlEx);
-      }
+        } catch (SQLException sqlEx) {
+            throw new DBException(
+                    "SQL-exception in zoekPloegenTrainer(int trainer_id) - connection" + sqlEx);
+        }
     }
-    
-    
+
+    public ArrayList<Ploeg> zoekPloegenCategorie(Categorie categorie) throws ApplicationException, DBException {
+        ArrayList<Ploeg> kl = new ArrayList<>();
+        // connectie tot stand brengen (en automatisch sluiten)
+        try (Connection conn = ConnectionManager.getConnection();) {
+            // preparedStatement opstellen (en automtisch sluiten)
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, niveau, trainer_id from ploeg where niveau=?");) {
+                stmt.setString(1, categorie.getTekst());
+                // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
+                stmt.execute();
+                // result opvragen (en automatisch sluiten)
+                try (ResultSet r = stmt.getResultSet()) {
+               // van alle spelers uit de database Ploeg-objecten maken
+
+                    while (r.next()) {
+                        Ploeg k = new Ploeg();
+                        k.setId(r.getInt("id"));
+                        k.setNaam(r.getString("naam"));
+                        k.setCategorie(r.getString("niveau"));
+                        k.setTrainer(r.getInt("trainer_id"));
+                        kl.add(k);
+                    }
+                    return kl;
+                } catch (SQLException sqlEx) {
+                    throw new DBException(
+                            "SQL-exception in zoekPloegenCategorie(Categorie categorie) - resultset" + sqlEx);
+                }
+            } catch (SQLException sqlEx) {
+                throw new DBException("SQL-exception in zoekPloegenCategorie(Categorie categorie) - statement" + sqlEx);
+            }
+        } catch (SQLException sqlEx) {
+            throw new DBException(
+                    "SQL-exception in zoekPloegenCategorie(Categorie categorie) - connection" + sqlEx);
+        }
+    }
+
 }

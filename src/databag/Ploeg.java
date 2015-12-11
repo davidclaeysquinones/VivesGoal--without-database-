@@ -15,12 +15,12 @@ import java.util.Objects;
  */
 public class Ploeg {
 
-    private int id;
+    private Integer id;
     private String naam;
     private Categorie categorie;
     private Integer trainer;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
