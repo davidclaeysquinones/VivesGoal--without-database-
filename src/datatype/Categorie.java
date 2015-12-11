@@ -7,6 +7,8 @@ package datatype;
 
 
 
+
+
 /**
  *
  Beschikbare ploegcategoriën
@@ -33,6 +35,8 @@ public enum Categorie {
     {
         return tekst;
     }
+    
+  
     
     
 }

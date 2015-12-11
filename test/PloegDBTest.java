@@ -47,8 +47,8 @@ public class PloegDBTest {
      */
     @After
     public void tearDown() throws Exception {
-        ploegDB.verwijderAllePloegen();
-        persoonDB.verwijderAllePersonen();
+//        ploegDB.verwijderAllePloegen();
+//        persoonDB.verwijderAllePersonen();
     }
 
     // TODO add test methods here.
@@ -175,12 +175,12 @@ public class PloegDBTest {
         
         
     }
-    
-    @Test 
-    public void verwijderAllePloegen() throws Exception
-     {
-        ploegDB.verwijderAllePloegen();
-    }
+//    
+//    @Test 
+//    public void verwijderAllePloegen() throws Exception
+//     {
+//        ploegDB.verwijderAllePloegen();
+//    }
     
     @Test
     public void SpelersZoekenVanPLoeg()throws Exception
@@ -240,5 +240,39 @@ public class PloegDBTest {
         {
             System.out.println(ploegen.get(i));
         }
+    }
+    
+    @Test 
+    public void verwijderenPloeg()throws Exception
+    {
+        Ploeg a = new Ploeg();
+        a.setCategorie(Categorie.U7);
+        a.setNaam("U7a");
+        
+        ploegDB.toevoegenPloeg(a);
+        
+        ploegDB.verwijderPloeg(a);
+    }
+    
+    @Test
+    public void verwijderenPloegMetTrainer()throws Exception
+    {
+        Ploeg a = new Ploeg();
+        a.setCategorie(Categorie.U9);
+        a.setNaam("U7a");
+        
+        ploegDB.toevoegenPloeg(a);
+        
+        Persoon b=new Persoon();
+        b.setTrainer(true);
+        b.setGeboortedatum(1940,4,11);
+        b.setNaam("Viernesito");
+        b.setVoornaam("Vientesito");
+        
+        persoonDB.toevoegenPersoon(b);
+        
+        ploegDB.toevoegenTrainerPloeg(b, a);
+        
+        ploegDB.verwijderPloeg(a);
     }
 }

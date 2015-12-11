@@ -196,7 +196,7 @@ public class PloegDB {
             // preparedStatement opstellen (en automtisch sluiten)
             try (PreparedStatement stmt = conn.
                     prepareStatement(
-                            "select id,naam,voornaam,geboortedatum,isTrainer,opmerking from persoon where id in (select trainer from ploeg where id in (select id from ploeg where naam='?'))");) {
+                            "select id,naam,voornaam,geboortedatum,isTrainer,opmerking from persoon where id in (select trainer_id from ploeg where id in (select id from ploeg where naam='?'))");) {
                         // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                         stmt.execute();
                         // result opvragen (en automatisch sluiten)
@@ -241,14 +241,15 @@ public class PloegDB {
                     stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
                     stmt.setInt(3, p.getTrainer());
-
+                    
+                 
                     stmt.execute();
                 } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in toevoegenPloeg(PloegBag p) - statement" + sqlEx);
                 }
             } else {
                 try (PreparedStatement stmt = conn.prepareStatement(
-                        "INSERT INTO ploeg (`naam`, `niveau`) VALUES (?,?)");) {
+                        "INSERT INTO ploeg (`naam`, `niveau`,`trainer_id`) VALUES (?,?,NULL)");) {
                     stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
 
@@ -277,9 +278,11 @@ public class PloegDB {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
+               
+
             // preparedStatement opstellen (en automtisch sluiten)
             try (PreparedStatement stmt = conn.prepareStatement(
-                    "update persoon set ploeg_id = NULL where ploeg_id = ?");) {
+                "update persoon set ploeg_id = NULL where ploeg_id = ?");) {
                 stmt.setInt(1, ploegid);
                 stmt.execute();
             }
@@ -305,8 +308,9 @@ public class PloegDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement(
-                    "update persoon set ploeg_id = NULL where ploeg in (select id from ploeg where naam=?)");) {
+                     
+                 try (PreparedStatement stmt = conn.prepareStatement(
+                 "update persoon set ploeg_id = NULL where ploeg_id in (select id from ploeg where naam=?)");) {
                 stmt.setString(1, naam);
                 stmt.execute();
             }
@@ -344,11 +348,11 @@ public class PloegDB {
 
                 stmt.execute();
             } catch (SQLException sqlEx) {
-                throw new DBException("SQL-exception in toevoegenPloeg(PloegBag p) - statement" + sqlEx);
+                throw new DBException("SQL-exception in verwijderAllePloegen() - statement" + sqlEx);
             }
         } catch (SQLException sqlEx) {
             throw new DBException(
-                    "SQL-exception in toevoegenPloeg(PloegBag p) - connection" + sqlEx);
+                    "SQL-exception in verwijderAllePloegen() - connection" + sqlEx);
         }
 
     }
