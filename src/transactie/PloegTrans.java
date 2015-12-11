@@ -80,9 +80,14 @@ public class PloegTrans implements PloegTransInterface {
         ploegen.remove(p);
         a.keySet().remove(p);
 
-        for (Ploeg current : a.keySet()) {
+        for(int i=0;i<ploegen.size();i++)
+        {
+            Ploeg current=ploegen.get(i);
             current.setNaam(genereerPloegNaam(current));
             ploegToevoegen(current);
+        }
+        
+        for (Ploeg current : a.keySet()) {
             ArrayList<Persoon> spelers = a.get(current);
             for (int j = 0; j < spelers.size(); j++) {
                 database.toevoegenSpelerPloeg(current, spelers.get(j));
