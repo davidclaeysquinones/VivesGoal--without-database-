@@ -473,16 +473,18 @@ public class PloegDB {
     }
 
     public void toevoegenTrainerPloeg(Persoon persoon, Ploeg ploeg) throws DBException, ApplicationException {
-        if(persoon!=null && ploeg!=null)
-        {
+        if (persoon != null && ploeg != null) {
             toevoegenTrainerPloeg(persoon.getNaam(), persoon.getVoornaam(), ploeg.getNaam());
-        }  
+        }
     }
 
     public void toevoegenTrainerPloeg(String naam, String voornaam, String ploegnaam) throws DBException, ApplicationException {
-        Persoon persoon = persoonDB.zoekPersoon(naam, voornaam);
-        Ploeg ploeg = zoekPloeg(ploegnaam);
-        toevoegenTrainerPloeg(persoon.getId(), ploeg.getId());
+        if (naam != null && voornaam != null) {
+            Persoon persoon = persoonDB.zoekPersoon(naam, voornaam);
+            Ploeg ploeg = zoekPloeg(ploegnaam);
+            toevoegenTrainerPloeg(persoon.getId(), ploeg.getId());
+        }
+        
     }
 
     public void verwijderTrainerPloeg(int ploegid) throws DBException, ApplicationException {
