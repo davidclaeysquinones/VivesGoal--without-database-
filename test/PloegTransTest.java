@@ -44,20 +44,20 @@ public class PloegTransTest {
 
     @After
     public void tearDown() {
-        PloegDB ploeg = new PloegDB();
-        try {
-            ploeg.verwijderAllePloegen();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        PersoonDB persoon = new PersoonDB();
-
-        try {
-            persoon.verwijderAllePersonen();
-        } catch (DBException ex) {
-            System.out.println(ex.getMessage());
-        }
+//        PloegDB ploeg = new PloegDB();
+//        try {
+//            ploeg.verwijderAllePloegen();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        PersoonDB persoon = new PersoonDB();
+//
+//        try {
+//            persoon.verwijderAllePersonen();
+//        } catch (DBException ex) {
+//            System.out.println(ex.getMessage());
+//        }
     }
 
     // TODO add test methods here.
@@ -112,23 +112,24 @@ public class PloegTransTest {
     @Test
     public void verwijderPloeg() throws Exception {
 
-        Ploeg a = new Ploeg();
-        a.setNaam("U11a");
-        a.setCategorie(Categorie.U11);
+        Ploeg p1 = new Ploeg();
+        p1.setNaam("U11a");
+        p1.setCategorie(Categorie.U11);
+       
 
-        Ploeg b = new Ploeg();
-        b.setNaam("U11b");
-        b.setCategorie(Categorie.U11);
+        Ploeg p2 = new Ploeg();
+        p2.setNaam("U11b");
+        p2.setCategorie(Categorie.U11);
 
-        Ploeg c = new Ploeg();
-        c.setNaam("U11c");
-        c.setCategorie(Categorie.U11);
+        Ploeg p3 = new Ploeg();
+        p3.setNaam("U11c");
+        p3.setCategorie(Categorie.U11);
 
-        transactie.ploegToevoegen(a);
-        transactie.ploegToevoegen(b);
-        transactie.ploegToevoegen(c);
+        transactie.ploegToevoegen(p1);
+        transactie.ploegToevoegen(p2);
+        transactie.ploegToevoegen(p3);
 
-        transactie.ploegVerwijderen(b);
+        transactie.ploegVerwijderen(p2);
 
     }
 

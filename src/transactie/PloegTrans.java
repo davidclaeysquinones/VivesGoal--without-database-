@@ -28,21 +28,26 @@ public class PloegTrans implements PloegTransInterface {
             throw new ApplicationException("Elke ploeg moet een categorie hebben");
         } else {
             String ploegnaam = genereerPloegNaam(p);
+            
             if (p.getTrainer() != null) {
                 PersoonDB persoonDB = new PersoonDB();
                 if (persoonDB.zoekPersoon(p.getTrainer()) != null) {
 
                     p.setNaam(ploegnaam);
                     database.toevoegenPloeg(p);
+                   
                     return database.zoekPloeg(p.getNaam()).getId();
                 } else {
-                    return null;
+                    throw new ApplicationException("De trainer bestaat niet");
                 }
             } else {
-
+                System.out.println(p.getTrainer() != null); 
+                System.out.println(ploegnaam);
                 p.setNaam(ploegnaam);
                 database.toevoegenPloeg(p);
+                
                 return database.zoekPloeg(p.getNaam()).getId();
+                
             }
 
         }
@@ -79,12 +84,14 @@ public class PloegTrans implements PloegTransInterface {
         }
         ploegen.remove(p);
         a.keySet().remove(p);
+        b.keySet().remove(p);
+        System.out.println(ploegen.size());
 
-        for(int i=0;i<ploegen.size();i++)
-        {
-            Ploeg current=ploegen.get(i);
-            current.setNaam(genereerPloegNaam(current));
-            ploegToevoegen(current);
+       
+        for (Ploeg current : ploegen) {
+            Integer id = ploegToevoegen(current);
+            System.out.println(id+"oki");
+            System.out.println(database.zoekPloeg(id));
         }
         
         for (Ploeg current : a.keySet()) {
