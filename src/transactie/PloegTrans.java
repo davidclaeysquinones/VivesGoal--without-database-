@@ -119,4 +119,26 @@ public class PloegTrans implements PloegTransInterface {
         return sb.toString();
 
     }
+
+    
+    private String genereerPloegNaamOneindig(Ploeg p) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        
+        int aantal = database.zoekPloegenCategorie(p.getCategorie()).size() + 1; //26 + 96 / 2+ 96
+        int a = aantal;
+        while (a > 26) {
+            int r = a%27; //28%27 = 1
+            r += 97; // 1+97=b
+            sb.insert(0,Character.toString((char) r)); //b
+            a = a / 27;  //28/27=1         
+        }
+        int b = a;
+        b += 96; //97 = a
+        sb.insert(0, Character.toString((char) b));
+        sb.insert(0, p.getCategorie().getTekst());
+        
+        return sb.toString();
+    }
+
+
 }

@@ -168,6 +168,16 @@ public class PloegTransTest {
         speler3.setNaam("3");
         speler3.setVoornaam("3");
         speler3.setGeboortedatum(1995,04,13);
+        
+        PersoonDB a =new PersoonDB();
+        a.toevoegenPersoon(speler1);
+        a.toevoegenPersoon(speler2);
+        a.toevoegenPersoon(speler3);
+        
+        PloegDB b = new PloegDB();
+        b.toevoegenSpelerPloeg(p1, speler1);
+        b.toevoegenSpelerPloeg(p2, speler2);
+        b.toevoegenSpelerPloeg(p3, speler3);
 
         transactie.ploegVerwijderen(p2);
     }
