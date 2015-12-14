@@ -41,7 +41,11 @@ public class PloegDB {
                         k.setId(r.getInt("id"));
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
-                        k.setTrainer(r.getInt("trainer_id"));
+                         if (r.getObject("trainer_id") == null) {
+                            k.setTrainer(null);
+                        } else {
+                            k.setTrainer(r.getInt("trainer_id"));
+                        }
 
                         returnPloeg = k;
                     }
@@ -82,8 +86,11 @@ public class PloegDB {
                         k.setId(r.getInt("id"));
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
-                        k.setTrainer(r.getInt("trainer_id"));
-
+                         if (r.getObject("trainer_id") == null) {
+                            k.setTrainer(null);
+                        } else {
+                            k.setTrainer(r.getInt("trainer_id"));
+                        }
                         returnPloeg = k;
                     }
 
@@ -236,7 +243,7 @@ public class PloegDB {
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
             if (p.getTrainer() != null) {
-                
+
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO ploeg (`naam`, `niveau`, `trainer_id`) VALUES (?,?,?)");) {
                     stmt.setString(1, p.getNaam());
@@ -252,7 +259,6 @@ public class PloegDB {
                         "INSERT INTO ploeg (`naam`, `niveau`) VALUES (?,?)");) {
                     stmt.setString(1, p.getNaam());
                     stmt.setString(2, p.getCategorie().getTekst());
-                   
 
                     stmt.execute();
                 } catch (SQLException sqlEx) {
@@ -485,7 +491,7 @@ public class PloegDB {
             Ploeg ploeg = zoekPloeg(ploegnaam);
             toevoegenTrainerPloeg(persoon.getId(), ploeg.getId());
         }
-        
+
     }
 
     public void verwijderTrainerPloeg(int ploegid) throws DBException, ApplicationException {
@@ -557,6 +563,14 @@ public class PloegDB {
                         k.setVoornaam(r.getString("voornaam"));
                         k.setGeboortedatum(r.getDate("geboortedatum"));
                         k.setTrainer(r.getBoolean("isTrainer"));
+                        if(r.getObject("ploeg_id")==null)
+                        {
+                            k.setPloegid(null);
+                        }
+                        else
+                        {
+                            k.setPloegid(r.getInt("ploeg_id"));
+                        }
                         kl.add(k);
                     }
                     return kl;
@@ -594,6 +608,14 @@ public class PloegDB {
                         k.setVoornaam(r.getString("voornaam"));
                         k.setGeboortedatum(r.getDate("geboortedatum"));
                         k.setTrainer(r.getBoolean("isTrainer"));
+                        if(r.getObject("ploeg_id")==null)
+                        {
+                            k.setPloegid(null);
+                        }
+                        else
+                        {
+                            k.setPloegid(r.getInt("ploeg_id"));
+                        }
                         kl.add(k);
                     }
                     return kl;
@@ -628,7 +650,7 @@ public class PloegDB {
                 stmt.execute();
                 // result opvragen (en automatisch sluiten)
                 try (ResultSet r = stmt.getResultSet()) {
-               // van alle spelers uit de database Ploeg-objecten maken
+                    // van alle spelers uit de database Ploeg-objecten maken
 
                     while (r.next()) {
                         Ploeg k = new Ploeg();
@@ -636,6 +658,14 @@ public class PloegDB {
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
                         k.setTrainer(r.getInt("trainer_id"));
+                        if(r.getObject("ploeg_id")==null)
+                        {
+                            k.setPloegid(null);
+                        }
+                        else
+                        {
+                            k.setPloegid(r.getInt("ploeg_id"));
+                        }
                         kl.add(k);
                     }
                     return kl;
@@ -663,14 +693,19 @@ public class PloegDB {
                 stmt.execute();
                 // result opvragen (en automatisch sluiten)
                 try (ResultSet r = stmt.getResultSet()) {
-               // van alle spelers uit de database Ploeg-objecten maken
+                    // van alle spelers uit de database Ploeg-objecten maken
 
                     while (r.next()) {
                         Ploeg k = new Ploeg();
                         k.setId(r.getInt("id"));
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
-                        k.setTrainer(r.getInt("trainer_id"));
+                        if (r.getObject("trainer_id") == null) {
+                            k.setTrainer(null);
+                        } else {
+                            k.setTrainer(r.getInt("trainer_id"));
+                        }
+
                         kl.add(k);
                     }
                     return kl;

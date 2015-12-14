@@ -44,20 +44,21 @@ public class PloegTransTest {
 
     @After
     public void tearDown() {
-//        PloegDB ploeg = new PloegDB();
-//        try {
-//            ploeg.verwijderAllePloegen();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        PersoonDB persoon = new PersoonDB();
-//
-//        try {
-//            persoon.verwijderAllePersonen();
-//        } catch (DBException ex) {
-//            System.out.println(ex.getMessage());
-//        }
+        PloegDB ploeg = new PloegDB();
+        try {
+            ploeg.verwijderAllePloegen();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        PersoonDB persoon = new PersoonDB();
+
+        try {
+            persoon.verwijderAllePersonen();
+        } catch (DBException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     // TODO add test methods here.
@@ -81,6 +82,7 @@ public class PloegTransTest {
         a.setNaam("Claeys");
         a.setVoornaam("David");
         a.setGeboortedatum(1995, 4, 13);
+        a.setTrainer(true);
         personen.toevoegenPersoon(a);
         Ploeg p = new Ploeg();
         p.setNaam("dinsdag");
@@ -98,6 +100,7 @@ public class PloegTransTest {
         Persoon a = new Persoon();
         a.setNaam("Claeys");
         a.setVoornaam("Cristina");
+        a.setTrainer(true);
         a.setGeboortedatum(1999, 10, 1);
         personen.toevoegenPersoon(a);
         Ploeg p = new Ploeg();
@@ -115,7 +118,6 @@ public class PloegTransTest {
         Ploeg p1 = new Ploeg();
         p1.setNaam("U11a");
         p1.setCategorie(Categorie.U11);
-       
 
         Ploeg p2 = new Ploeg();
         p2.setNaam("U11b");

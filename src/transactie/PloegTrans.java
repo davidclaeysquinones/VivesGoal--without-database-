@@ -28,29 +28,30 @@ public class PloegTrans implements PloegTransInterface {
             throw new ApplicationException("Elke ploeg moet een categorie hebben");
         } else {
             String ploegnaam = genereerPloegNaam(p);
-            
+
             if (p.getTrainer() != null) {
                 PersoonDB persoonDB = new PersoonDB();
-                if (persoonDB.zoekPersoon(p.getTrainer()) != null) {
+                if (persoonDB.bestaatPersoon(p.getTrainer()) == false) {
+                    throw new ApplicationException("De trainer bestaat niet");
 
+                } else {
                     p.setNaam(ploegnaam);
                     database.toevoegenPloeg(p);
-                   
-                    return database.zoekPloeg(p.getNaam()).getId();
-                } else {
-                    throw new ApplicationException("De trainer bestaat niet");
+
+                    return database.zoekPloeg(p).getId();
                 }
             } else {
-                System.out.println(p.getTrainer() != null); 
+                System.out.println(p.getTrainer() != null);
                 System.out.println(ploegnaam);
                 p.setNaam(ploegnaam);
                 database.toevoegenPloeg(p);
-                
-                return database.zoekPloeg(p.getNaam()).getId();
-                
+
+                return database.zoekPloeg(p).getId();
+
             }
 
         }
+
     }
 
     @Override
@@ -61,61 +62,58 @@ public class PloegTrans implements PloegTransInterface {
 
     @Override
     public void trainerKoppelenAanPloeg(int trainerId, int ploegId) throws Exception {
-        database.toevoegenTrainerPloeg(trainerId, ploegId);
+        PersoonDB a = new PersoonDB();
+        Persoon p =a.zoekPersoon(trainerId);
+        if(p!=null && p.getTrainer()==true)
+        {
+            database.toevoegenTrainerPloeg(trainerId, ploegId);
+        }
+        else
+        {
+            throw new ApplicationException("De opgegeven persoon bestaat niet of is geen trainer");
+        }
+        
     }
 
-    public boolean ploegVerwijderen(Ploeg p) throws Exception {
+    public void ploegVerwijderen(Ploeg p) throws Exception {
 
         ArrayList<Ploeg> ploegen = database.zoekPloegenCategorie(p.getCategorie());
 
-        HashMap<Ploeg, ArrayList<Persoon>> a = new HashMap<>();
-        HashMap<Ploeg, Persoon> b = new HashMap<>();
+        HashMap<Ploeg, ArrayList<Persoon>> spelerslijst = new HashMap<>();
 
         for (int i = 0; i < ploegen.size(); i++) {
-            a.put(ploegen.get(i), database.zoekSpelersPloeg(ploegen.get(i)));
+            spelerslijst.put(ploegen.get(i), database.zoekSpelersPloeg(ploegen.get(i)));
         }
 
-        for (int i = 0; i < ploegen.size(); i++) {
-            b.put(ploegen.get(i), database.getTrainer(ploegen.get(i)));
-        }
 
         for (int i = 0; i < ploegen.size(); i++) {
             database.verwijderPloeg(ploegen.get(i));
         }
         ploegen.remove(p);
-        a.keySet().remove(p);
-        b.keySet().remove(p);
-        System.out.println(ploegen.size());
+        spelerslijst.keySet().remove(p);
+//        trainer.keySet().remove(p);
 
-       
         for (Ploeg current : ploegen) {
-            Integer id = ploegToevoegen(current);
-            System.out.println(id+"oki");
-            System.out.println(database.zoekPloeg(id));
+            ploegToevoegen(current);
         }
-        
-        for (Ploeg current : a.keySet()) {
-            ArrayList<Persoon> spelers = a.get(current);
+
+        for (Ploeg current : spelerslijst.keySet()) {
+            ArrayList<Persoon> spelers = spelerslijst.get(current);
             for (int j = 0; j < spelers.size(); j++) {
                 database.toevoegenSpelerPloeg(current, spelers.get(j));
             }
         }
 
-        for (Ploeg current : b.keySet()) {
-            database.toevoegenTrainerPloeg(b.get(current), current);
-        }
 
-        return true;
 
     }
 
-    private String genereerPloegNaam(Ploeg p) throws Exception {
+    public String genereerPloegNaam(Ploeg p) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(p.getCategorie().getTekst());
-        int aantal = database.zoekPloegenCategorie(p.getCategorie()).size() + 97;
-        sb.append(Character.toString((char) aantal));
+        int aantal = database.zoekPloegenCategorie(p.getCategorie()).size();
+        sb.append(Character.toString((char) ((char) aantal + 97)));
         return sb.toString();
 
     }
-
 }

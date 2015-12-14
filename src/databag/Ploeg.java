@@ -61,7 +61,7 @@ public class Ploeg {
      *
      * @param id
      */
-    public void setTrainer(int id) {
+    public void setTrainer(Integer id) {
         trainer = id;
     }
 
