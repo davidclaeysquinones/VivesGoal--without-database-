@@ -378,11 +378,11 @@ public class PloegDB {
             } catch (NullPointerException e) {
                 throw new ApplicationException("De opgegeven persoon of ploeg bestaat niet");
             } catch (SQLException sqlEx) {
-                throw new DBException("SQL-exception in toevoegenSpelerPloeg(int ploegid,PersoonBag p) - statement" + sqlEx);
+                throw new DBException("SQL-exception in toevoegenSpelerPloeg(int ploegid, int persoonid) - statement" + sqlEx);
             }
         } catch (SQLException sqlEx) {
             throw new DBException(
-                    "SQL-exception in toevoegenSpelerPloeg(int ploegid,PersoonBag p) - connection" + sqlEx);
+                    "SQL-exception in toevoegenSpelerPloeg(int ploegid, int persoonid) - connection" + sqlEx);
         }
     }
 //   debugged
@@ -544,47 +544,9 @@ public class PloegDB {
 
     public ArrayList<Persoon> zoekSpelersPloeg(String ploegnaam) throws DBException, ApplicationException {
 
-        ArrayList<Persoon> kl = new ArrayList<>();
-        // connectie tot stand brengen (en automatisch sluiten)
-        try (Connection conn = ConnectionManager.getConnection();) {
-            // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer,ploeg_id from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where naam=?) order by naam,voornaam");) {
-                stmt.setString(1, ploegnaam);
-                // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
-                stmt.execute();
-                // result opvragen (en automatisch sluiten)
-                try (ResultSet r = stmt.getResultSet()) {
-                    // van alle spelers uit de database Persoon-objecten maken
-
-                    while (r.next()) {
-                        Persoon k = new Persoon();
-                        k.setId(r.getInt("id"));
-                        k.setNaam(r.getString("naam"));
-                        k.setVoornaam(r.getString("voornaam"));
-                        k.setGeboortedatum(r.getDate("geboortedatum"));
-                        k.setTrainer(r.getBoolean("isTrainer"));
-                        if(r.getObject("ploeg_id")==null)
-                        {
-                            k.setPloegid(null);
-                        }
-                        else
-                        {
-                            k.setPloegid(r.getInt("ploeg_id"));
-                        }
-                        kl.add(k);
-                    }
-                    return kl;
-                } catch (SQLException sqlEx) {
-                    throw new DBException(
-                            "SQL-exception in zoekSpelersPloeg(String ploegnaam) - resultset" + sqlEx);
-                }
-            } catch (SQLException sqlEx) {
-                throw new DBException("SQL-exception in zoekSpelersPloeg(String ploegnaam) - statement" + sqlEx);
-            }
-        } catch (SQLException sqlEx) {
-            throw new DBException(
-                    "SQL-exception in zoekSpelersPloeg(String ploegnaam) - connection" + sqlEx);
-        }
+        Ploeg p =zoekPloeg(ploegnaam);
+        ArrayList<Persoon> a =zoekSpelersPloeg(p.getId());
+        return a;
     }
 
     public ArrayList<Persoon> zoekSpelersPloeg(int id) throws DBException, ApplicationException {

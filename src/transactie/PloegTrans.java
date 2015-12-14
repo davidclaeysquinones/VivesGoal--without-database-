@@ -83,6 +83,7 @@ public class PloegTrans implements PloegTransInterface {
         
 
         for (int i = 0; i < ploegen.size(); i++) {
+            System.out.println(database.zoekSpelersPloeg(ploegen.get(i).getId()));
             spelerslijst.put(ploegen.get(i), database.zoekSpelersPloeg(ploegen.get(i)));
         }
 
@@ -101,9 +102,8 @@ public class PloegTrans implements PloegTransInterface {
         for (Ploeg current : spelerslijst.keySet()) {
             ArrayList<Persoon> spelers = spelerslijst.get(current);
             if (spelers != null) {
-                for (int j = 0; j < spelers.size(); j++) {
-
-                    database.toevoegenSpelerPloeg(current.getId(), spelers.get(j).getId());
+                for (int i = 0; i < spelers.size(); i++) {
+                    database.toevoegenSpelerPloeg(current.getId(), spelers.get(i).getId());
                 }
             }
 
