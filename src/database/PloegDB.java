@@ -396,7 +396,7 @@ public class PloegDB {
      * @throws ApplicationException
      */
     public void toevoegenSpelerPloeg(String ploegnaam, Persoon persoon) throws DBException, ApplicationException {
-        Persoon p = persoonDB.zoekPersoon(persoon.getNaam(), persoon.getVoornaam());
+        Persoon p = persoonDB.zoekPersoon(persoon);
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)

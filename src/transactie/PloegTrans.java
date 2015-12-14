@@ -41,8 +41,7 @@ public class PloegTrans implements PloegTransInterface {
                     return database.zoekPloeg(p).getId();
                 }
             } else {
-                System.out.println(p.getTrainer() != null);
-                System.out.println(ploegnaam);
+                
                 p.setNaam(ploegnaam);
                 database.toevoegenPloeg(p);
 
@@ -80,6 +79,8 @@ public class PloegTrans implements PloegTransInterface {
         ArrayList<Ploeg> ploegen = database.zoekPloegenCategorie(p.getCategorie());
 
         HashMap<Ploeg, ArrayList<Persoon>> spelerslijst = new HashMap<>();
+        
+        
 
         for (int i = 0; i < ploegen.size(); i++) {
             spelerslijst.put(ploegen.get(i), database.zoekSpelersPloeg(ploegen.get(i)));
@@ -91,6 +92,7 @@ public class PloegTrans implements PloegTransInterface {
         }
         ploegen.remove(p);
         spelerslijst.keySet().remove(p);
+        
 
         for (Ploeg current : ploegen) {
             ploegToevoegen(current);
@@ -101,7 +103,7 @@ public class PloegTrans implements PloegTransInterface {
             if (spelers != null) {
                 for (int j = 0; j < spelers.size(); j++) {
 
-                    database.toevoegenSpelerPloeg(current, spelers.get(j));
+                    database.toevoegenSpelerPloeg(current.getId(), spelers.get(j).getId());
                 }
             }
 

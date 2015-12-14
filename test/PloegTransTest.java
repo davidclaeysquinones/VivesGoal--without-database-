@@ -140,15 +140,15 @@ public class PloegTransTest {
     {
         Ploeg p1 = new Ploeg();
         p1.setNaam("U7a");
-        p1.setCategorie(Categorie.U11);
+        p1.setCategorie(Categorie.U7);
 
         Ploeg p2 = new Ploeg();
         p2.setNaam("U7b");
-        p2.setCategorie(Categorie.U11);
+        p2.setCategorie(Categorie.U7);
 
         Ploeg p3 = new Ploeg();
         p3.setNaam("U7c");
-        p3.setCategorie(Categorie.U11);
+        p3.setCategorie(Categorie.U7);
 
         transactie.ploegToevoegen(p1);
         transactie.ploegToevoegen(p2);
