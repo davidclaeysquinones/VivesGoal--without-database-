@@ -44,20 +44,20 @@ public class PloegTransTest {
 
     @After
     public void tearDown() {
-        PloegDB ploeg = new PloegDB();
-        try {
-            ploeg.verwijderAllePloegen();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        PersoonDB persoon = new PersoonDB();
-
-        try {
-            persoon.verwijderAllePersonen();
-        } catch (DBException ex) {
-            System.out.println(ex.getMessage());
-        }
+//        PloegDB ploeg = new PloegDB();
+//        try {
+//            ploeg.verwijderAllePloegen();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        PersoonDB persoon = new PersoonDB();
+//
+//        try {
+//            persoon.verwijderAllePersonen();
+//        } catch (DBException ex) {
+//            System.out.println(ex.getMessage());
+//        }
 
     }
 
@@ -133,6 +133,43 @@ public class PloegTransTest {
 
         transactie.ploegVerwijderen(p2);
 
+    }
+    
+    @Test
+    public void verwijderPloegMetSpelers()throws Exception
+    {
+        Ploeg p1 = new Ploeg();
+        p1.setNaam("U7a");
+        p1.setCategorie(Categorie.U11);
+
+        Ploeg p2 = new Ploeg();
+        p2.setNaam("U7b");
+        p2.setCategorie(Categorie.U11);
+
+        Ploeg p3 = new Ploeg();
+        p3.setNaam("U7c");
+        p3.setCategorie(Categorie.U11);
+
+        transactie.ploegToevoegen(p1);
+        transactie.ploegToevoegen(p2);
+        transactie.ploegToevoegen(p3);
+        
+        Persoon speler1 = new Persoon();
+        speler1.setNaam("1");
+        speler1.setVoornaam("1");
+        speler1.setGeboortedatum(1995,04,13);
+        
+        Persoon speler2 = new Persoon();
+        speler2.setNaam("2");
+        speler2.setVoornaam("2");
+        speler2.setGeboortedatum(1995,04,13);
+        
+        Persoon speler3 = new Persoon();
+        speler3.setNaam("3");
+        speler3.setVoornaam("3");
+        speler3.setGeboortedatum(1995,04,13);
+
+        transactie.ploegVerwijderen(p2);
     }
 
 }

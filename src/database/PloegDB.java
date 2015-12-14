@@ -548,7 +548,7 @@ public class PloegDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where naam=?) order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer,ploeg_id from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where naam=?) order by naam,voornaam");) {
                 stmt.setString(1, ploegnaam);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
@@ -593,7 +593,7 @@ public class PloegDB {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where id=?) order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer,ploeg_id from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where id=?) order by naam,voornaam");) {
                 stmt.setInt(1, id);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
@@ -658,14 +658,7 @@ public class PloegDB {
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
                         k.setTrainer(r.getInt("trainer_id"));
-                        if(r.getObject("ploeg_id")==null)
-                        {
-                            k.setPloegid(null);
-                        }
-                        else
-                        {
-                            k.setPloegid(r.getInt("ploeg_id"));
-                        }
+                        
                         kl.add(k);
                     }
                     return kl;

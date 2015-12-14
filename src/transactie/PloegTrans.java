@@ -91,7 +91,6 @@ public class PloegTrans implements PloegTransInterface {
         }
         ploegen.remove(p);
         spelerslijst.keySet().remove(p);
-//        trainer.keySet().remove(p);
 
         for (Ploeg current : ploegen) {
             ploegToevoegen(current);
@@ -99,9 +98,13 @@ public class PloegTrans implements PloegTransInterface {
 
         for (Ploeg current : spelerslijst.keySet()) {
             ArrayList<Persoon> spelers = spelerslijst.get(current);
-            for (int j = 0; j < spelers.size(); j++) {
-                database.toevoegenSpelerPloeg(current, spelers.get(j));
+            if (spelers != null) {
+                for (int j = 0; j < spelers.size(); j++) {
+
+                    database.toevoegenSpelerPloeg(current, spelers.get(j));
+                }
             }
+
         }
 
 
