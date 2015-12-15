@@ -81,7 +81,7 @@ public class PloegTrans implements PloegTransInterface {
         ArrayList<Ploeg> ploegen;
         ploegen = database.zoekPloegenCategorie(p.getCategorie());
 
-//      HashMap die de spelers per ploeg bijhoudt
+//      HashMap die later de spelers per ploeg zal bijhouden
         HashMap<Ploeg, ArrayList<Persoon>> spelerslijst = new HashMap<>();
 
 //      Toevoegen van spelers aan HashMap
