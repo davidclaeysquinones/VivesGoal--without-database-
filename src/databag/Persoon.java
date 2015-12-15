@@ -73,10 +73,12 @@ public class Persoon {
     }
 
     /**
-     *
+     * setGeboortedatum(2016,1,1) stelt de datum in op 1 januari 2016
+     * 
      * @param jaar
      * @param maand
-     * @param dag setGeboortedatum(2016,1,1) stelt de datum in op 1 januari 2016
+     * @param dag 
+
      * @throws ApplicationException
      */
 
