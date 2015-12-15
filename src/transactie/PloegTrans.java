@@ -82,12 +82,10 @@ public class PloegTrans implements PloegTransInterface {
 
         HashMap<Ploeg, ArrayList<Persoon>> spelerslijst = new HashMap<>();
         
-        HashMap<Ploeg,Integer> ploegids = new HashMap<>();
         
         
 
         for (int i = 0; i < ploegen.size(); i++) {
-            System.out.println("naam"+ploegen.get(i).getNaam());
             spelerslijst.put(ploegen.get(i), database.zoekSpelersPloeg(ploegen.get(i)));
         }
 
@@ -97,20 +95,30 @@ public class PloegTrans implements PloegTransInterface {
         }
         ploegen.remove(p);
         spelerslijst.keySet().remove(p);
-        
 
         for (Ploeg current : ploegen) {
-            Integer i=ploegToevoegen(current);
-            ploegids.put(current, i);
+            ArrayList<Persoon> a = spelerslijst.get(current);
+            spelerslijst.keySet().remove(current);
+            Integer i = ploegToevoegen(current);
+
+            Ploeg nieuw = database.zoekPloeg(i);
+            spelerslijst.put(nieuw, a);
         }
 
+
+        for(Ploeg current:spelerslijst.keySet())
+        {
+            System.out.println("list :"+current);
+            System.out.println("personen"+spelerslijst.get(current));
+        }
+        
         for (Ploeg current : spelerslijst.keySet()) {
             ArrayList<Persoon> spelers = spelerslijst.get(current);
+
             if (spelers != null) {
-                for (int i = 0; i < spelers.size(); i++) {
-                    System.out.println("takata"+database.zoekPloeg(ploegids.get(current)).getNaam());
-                    Ploeg ploeg = database.zoekPloeg(ploegids.get(current));
-                    database.toevoegenSpelerPloeg(ploeg.getId(), spelers.get(i).getId());
+                for (Persoon speler : spelers) {
+                    System.out.println("ploeg"+current);
+                    database.toevoegenSpelerPloeg(current.getId(), speler.getId());
                 }
             }
 

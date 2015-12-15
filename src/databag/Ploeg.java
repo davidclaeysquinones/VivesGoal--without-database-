@@ -86,6 +86,7 @@ public class Ploeg {
                     if (p.getNaam().equals(this.naam) && p.getCategorie().equals(this.categorie)) {
                         return true;
                     } else {
+                        
                         return false;
                     }
                 }
@@ -96,10 +97,12 @@ public class Ploeg {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.naam);
-        hash = 37 * hash + Objects.hashCode(this.categorie);
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.naam);
+        hash = 53 * hash + Objects.hashCode(this.categorie);
         return hash;
     }
+
+ 
 
 }
