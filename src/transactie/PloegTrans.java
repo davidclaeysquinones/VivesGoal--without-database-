@@ -76,14 +76,18 @@ public class PloegTrans implements PloegTransInterface {
 
     public void ploegVerwijderen(Ploeg p) throws Exception {
 
-        ArrayList<Ploeg> ploegen = database.zoekPloegenCategorie(p.getCategorie());
+        ArrayList<Ploeg> ploegen;
+        ploegen=database.zoekPloegenCategorie(p.getCategorie());
+        
 
         HashMap<Ploeg, ArrayList<Persoon>> spelerslijst = new HashMap<>();
+        
+        HashMap<Ploeg,Integer> ploegids = new HashMap<>();
         
         
 
         for (int i = 0; i < ploegen.size(); i++) {
-            System.out.println(database.zoekSpelersPloeg(ploegen.get(i).getId()));
+            System.out.println("naam"+ploegen.get(i).getNaam());
             spelerslijst.put(ploegen.get(i), database.zoekSpelersPloeg(ploegen.get(i)));
         }
 
@@ -96,14 +100,17 @@ public class PloegTrans implements PloegTransInterface {
         
 
         for (Ploeg current : ploegen) {
-            ploegToevoegen(current);
+            Integer i=ploegToevoegen(current);
+            ploegids.put(current, i);
         }
 
         for (Ploeg current : spelerslijst.keySet()) {
             ArrayList<Persoon> spelers = spelerslijst.get(current);
             if (spelers != null) {
                 for (int i = 0; i < spelers.size(); i++) {
-                    database.toevoegenSpelerPloeg(current.getId(), spelers.get(i).getId());
+                    System.out.println("takata"+database.zoekPloeg(ploegids.get(current)).getNaam());
+                    Ploeg ploeg = database.zoekPloeg(ploegids.get(current));
+                    database.toevoegenSpelerPloeg(ploeg.getId(), spelers.get(i).getId());
                 }
             }
 

@@ -47,8 +47,8 @@ public class PloegDBTest {
      */
     @After
     public void tearDown() throws Exception {
-//        ploegDB.verwijderAllePloegen();
-//        persoonDB.verwijderAllePersonen();
+        ploegDB.verwijderAllePloegen();
+        persoonDB.verwijderAllePersonen();
     }
 
     // TODO add test methods here.
@@ -276,5 +276,5 @@ public class PloegDBTest {
         ploegDB.verwijderPloeg(a);
     }
     
-    
+   
 }

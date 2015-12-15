@@ -44,20 +44,20 @@ public class PloegTransTest {
 
     @After
     public void tearDown() {
-        PloegDB ploeg = new PloegDB();
-        try {
-            ploeg.verwijderAllePloegen();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        PersoonDB persoon = new PersoonDB();
-
-        try {
-            persoon.verwijderAllePersonen();
-        } catch (DBException ex) {
-            System.out.println(ex.getMessage());
-        }
+//        PloegDB ploeg = new PloegDB();
+//        try {
+//            ploeg.verwijderAllePloegen();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        PersoonDB persoon = new PersoonDB();
+//
+//        try {
+//            persoon.verwijderAllePersonen();
+//        } catch (DBException ex) {
+//            System.out.println(ex.getMessage());
+//        }
 
     }
 

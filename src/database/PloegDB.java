@@ -551,18 +551,18 @@ public class PloegDB {
 
     public ArrayList<Persoon> zoekSpelersPloeg(int id) throws DBException, ApplicationException {
 
-        ArrayList<Persoon> kl = new ArrayList<>();
+        ArrayList<Persoon> sp = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
-            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer,ploeg_id from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where id=?) order by naam,voornaam");) {
+            try (PreparedStatement stmt = conn.prepareStatement("select id, naam, voornaam, geboortedatum, isTrainer,ploeg_id from persoon where isTrainer=\"false\" and ploeg_id in(select id from ploeg where id=?)");) {
                 stmt.setInt(1, id);
                 // execute voert elke sql-statement uit, executeQuery enkel de eenvoudige
                 stmt.execute();
                 // result opvragen (en automatisch sluiten)
                 try (ResultSet r = stmt.getResultSet()) {
-                    // van alle spelers uit de database Ploeg-objecten maken
-
+                    // van alle spelers uit de database Persoon-objecten maken
+                  
                     while (r.next()) {
                         Persoon k = new Persoon();
                         k.setId(r.getInt("id"));
@@ -578,9 +578,13 @@ public class PloegDB {
                         {
                             k.setPloegid(r.getInt("ploeg_id"));
                         }
-                        kl.add(k);
+                        
+                        sp.add(k);
+                    
+                        
                     }
-                    return kl;
+                   
+                    return sp;
                 } catch (SQLException sqlEx) {
                     throw new DBException(
                             "SQL-exception in zoekSpelersPloeg(int id) - resultset" + sqlEx);
