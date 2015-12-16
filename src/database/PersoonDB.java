@@ -16,9 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * database functionaliteiten voor spelers
  *
- * @author david
- */
+ */ 
+ 
 public class PersoonDB {
 
     public PersoonDB() {

@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * Bevat alle functionaliteiten voor de database
+ * database functionaliteiten voor ploegen
  */
 public class PloegDB {
 
@@ -21,6 +21,13 @@ public class PloegDB {
         persoonDB = new PersoonDB();
     }
 
+    /**
+     *
+     * @param id het id van de ploeg die je wilt zoeken
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public Ploeg zoekPloeg(int id) throws DBException, ApplicationException {
         Ploeg returnPloeg = null;
         // connectie tot stand brengen (en automatisch sluiten)
@@ -41,7 +48,7 @@ public class PloegDB {
                         k.setId(r.getInt("id"));
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
-                         if (r.getObject("trainer_id") == null) {
+                        if (r.getObject("trainer_id") == null) {
                             k.setTrainer(null);
                         } else {
                             k.setTrainer(r.getInt("trainer_id"));
@@ -65,7 +72,13 @@ public class PloegDB {
         }
     }
 
-    // debugged method
+    /**
+     *
+     * @param naam de naam van de ploeg die je zoekt
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public Ploeg zoekPloeg(String naam) throws DBException, ApplicationException {
         Ploeg returnPloeg = null;
         // connectie tot stand brengen (en automatisch sluiten)
@@ -86,7 +99,7 @@ public class PloegDB {
                         k.setId(r.getInt("id"));
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
-                         if (r.getObject("trainer_id") == null) {
+                        if (r.getObject("trainer_id") == null) {
                             k.setTrainer(null);
                         } else {
                             k.setTrainer(r.getInt("trainer_id"));
@@ -115,6 +128,12 @@ public class PloegDB {
 
     }
 
+    /**
+     *
+     * @return ArrayList met alle ploegen
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public ArrayList<Ploeg> zoekAllePloegen() throws DBException, ApplicationException {
         ArrayList ploegen = new ArrayList();
         // connectie tot stand brengen (en automatisch sluiten)
@@ -154,6 +173,14 @@ public class PloegDB {
 
     }
 
+    /**
+     * deze methode zoekt de trainer op van de opgegeven ploeg
+     *
+     * @param ploegid het id van de ploeg waarvan je de trainer wilt zoeken
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public Persoon getTrainer(int ploegid) throws DBException, ApplicationException {
         try (Connection conn = ConnectionManager.getConnection();) {
 
@@ -193,10 +220,26 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode zoekt de trainer op van de opgegeven ploeg
+     *
+     * @param p de ploeg waarvan je de trainer wilt zoeken
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public Persoon getTrainer(Ploeg p) throws DBException, ApplicationException {
         return getTrainer(p.getNaam());
     }
 
+    /**
+     * deze methode zoekt de trainer op van de opgegeven ploeg
+     *
+     * @param ploegnaam de naam van de ploeg waarvan je de trainer wilt zoeken
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public Persoon getTrainer(String ploegnaam) throws DBException, ApplicationException {
         try (Connection conn = ConnectionManager.getConnection();) {
 
@@ -236,7 +279,13 @@ public class PloegDB {
         }
     }
 
-    //Ruben
+    /**
+     * ploeg toevoegen aan database
+     *
+     * @param p de ploeg die je wilt toevoegen
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void toevoegenPloeg(Ploeg p) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -273,14 +322,24 @@ public class PloegDB {
 
     }
 
-    //Ruben
+    /**
+     * ploeg verwijderen van database
+     *
+     * @param p de ploeg die je wilt verwijderen
+     * @throws DBException
+     */
     public void verwijderPloeg(Ploeg p) throws DBException {
 
         verwijderPloeg(p.getNaam());
 
     }
 
-    //Ruben
+    /**
+     * ploeg verwijderen van database
+     *
+     * @param ploegid het id van de ploeg die je wilt verwijderen
+     * @throws DBException
+     */
     public void verwijderPloeg(int ploegid) throws DBException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -308,7 +367,12 @@ public class PloegDB {
 
     }
 
-    // Ruben
+    /**
+     * ploeg verwijderen van database
+     *
+     * @param naam de naam van de ploeg die je wilt verwijderen
+     * @throws DBException
+     */
     public void verwijderPloeg(String naam) throws DBException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -335,9 +399,12 @@ public class PloegDB {
         }
 
     }
-// Ruben
-//   debugged
 
+    /**
+     * deze methode verwijdert alle ploegen
+     *
+     * @throws DBException
+     */
     public void verwijderAllePloegen() throws DBException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -363,6 +430,14 @@ public class PloegDB {
 
     }
 
+    /**
+     * deze methode koppelt de opgegeven speler aan de opgegeven ploeg
+     *
+     * @param ploegid
+     * @param persoonid
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void toevoegenSpelerPloeg(int ploegid, int persoonid) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -385,10 +460,9 @@ public class PloegDB {
                     "SQL-exception in toevoegenSpelerPloeg(int ploegid, int persoonid) - connection" + sqlEx);
         }
     }
-//   debugged
 
     /**
-     * Het Persoon object moet een bestaand naam en voornaam hebben
+     * deze methode koppelt de opgegeven speler aan de opgegeven ploeg
      *
      * @param ploegnaam
      * @param persoon
@@ -417,13 +491,27 @@ public class PloegDB {
                     "SQL-exception in toevoegenSpelerPloeg(String naam,PersoonBag p) - connection" + sqlEx);
         }
     }
-//   debugged
 
+    /**
+     * deze methode koppelt de opgegeven speler van de ploegen waarin hij zit
+     *
+     * @param ploeg
+     * @param speler
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void toevoegenSpelerPloeg(Ploeg ploeg, Persoon speler) throws DBException, ApplicationException {
 
         toevoegenSpelerPloeg(ploeg.getNaam(), speler);
     }
 
+    /**
+     * deze methode ontkoppelt de opgegeven speler van de ploegen waarin hij zit
+     *
+     * @param id het id van de speler die je wilt ontkoppelen
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void verwijderSpelerPloeg(int id) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -447,16 +535,39 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode ontkoppelt de opgegeven speler aan de opgegeven ploeg
+     *
+     * @param p de speler die je wilt ontkoppelen
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void verwijderSpelerPloeg(Persoon p) throws DBException, ApplicationException {
         verwijderSpelerPloeg(p.getNaam(), p.getVoornaam());
     }
 
+    /**
+     * deze methode ontkoppelt de opgegeven speler van de ploegen waarin hij zit
+     *
+     * @param naam
+     * @param voornaam
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException, ApplicationException {
 
         Persoon p = persoonDB.zoekPersoon(naam, voornaam);
         verwijderSpelerPloeg(p.getId());
     }
 
+    /**
+     * deze methode koppelt de opgegeven trainer aan de opgegeven ploeg
+     *
+     * @param persoonid het id van de trainer
+     * @param ploegid het id van de ploeg
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void toevoegenTrainerPloeg(int persoonid, int ploegid) throws DBException, ApplicationException {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -479,21 +590,44 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode koppelt de opgegeven trainer aan de opgegeven ploeg
+     *
+     * @param persoon
+     * @param ploeg
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void toevoegenTrainerPloeg(Persoon persoon, Ploeg ploeg) throws DBException, ApplicationException {
-        if (persoon != null && ploeg != null) {
-            toevoegenTrainerPloeg(persoon.getNaam(), persoon.getVoornaam(), ploeg.getNaam());
-        }
+
+        toevoegenTrainerPloeg(persoon.getNaam(), persoon.getVoornaam(), ploeg.getNaam());
+
     }
 
+    /**
+     * deze methode koppelt de opgegeven trainer aan de opgegeven ploeg
+     *
+     * @param naam de naam van de trainer
+     * @param voornaam de voornaam van de trainer
+     * @param ploegnaam de ploegnaam van de ploeg
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void toevoegenTrainerPloeg(String naam, String voornaam, String ploegnaam) throws DBException, ApplicationException {
-        if (naam != null && voornaam != null) {
-            Persoon persoon = persoonDB.zoekPersoon(naam, voornaam);
-            Ploeg ploeg = zoekPloeg(ploegnaam);
-            toevoegenTrainerPloeg(persoon.getId(), ploeg.getId());
-        }
+
+        Persoon persoon = persoonDB.zoekPersoon(naam, voornaam);
+        Ploeg ploeg = zoekPloeg(ploegnaam);
+        toevoegenTrainerPloeg(persoon.getId(), ploeg.getId());
 
     }
 
+    /**
+     * deze methode ontkoppelt de trainer van de opgegeven ploeg
+     *
+     * @param ploegid het id van de opgegeven ploeg
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void verwijderTrainerPloeg(int ploegid) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -516,10 +650,24 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode ontkoppelt de trainer van de opgegeven ploeg
+     *
+     * @param p de opgegeven ploeg
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void verwijderTrainerPloeg(Ploeg p) throws DBException, ApplicationException {
         verwijderTrainerPloeg(p.getNaam());
     }
 
+    /**
+     * deze methode ontkoppelt de trainer van de opgegeven ploeg
+     *
+     * @param ploegnaam de naam van de opgegeven ploeg
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public void verwijderTrainerPloeg(String ploegnaam) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -542,13 +690,32 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode geeft een ArrayList terug waarin alle spelers van de
+     * opgegeven ploeg zitten
+     *
+     * @param ploegnaam de naam van de ploeg waarvan je alle spelers wilt
+     * opvragen
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public ArrayList<Persoon> zoekSpelersPloeg(String ploegnaam) throws DBException, ApplicationException {
 
-        Ploeg p =zoekPloeg(ploegnaam);
-        ArrayList<Persoon> a =zoekSpelersPloeg(p.getId());
+        Ploeg p = zoekPloeg(ploegnaam);
+        ArrayList<Persoon> a = zoekSpelersPloeg(p.getId());
         return a;
     }
 
+    /**
+     * deze methode geeft een ArrayList terug waarin alle spelers van de
+     * opgegeven ploeg zitten
+     *
+     * @param id het id van de ploeg waarvan je alle spelers wilt opvragen
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public ArrayList<Persoon> zoekSpelersPloeg(int id) throws DBException, ApplicationException {
 
         ArrayList<Persoon> sp = new ArrayList<>();
@@ -562,7 +729,7 @@ public class PloegDB {
                 // result opvragen (en automatisch sluiten)
                 try (ResultSet r = stmt.getResultSet()) {
                     // van alle spelers uit de database Persoon-objecten maken
-                  
+
                     while (r.next()) {
                         Persoon k = new Persoon();
                         k.setId(r.getInt("id"));
@@ -570,20 +737,16 @@ public class PloegDB {
                         k.setVoornaam(r.getString("voornaam"));
                         k.setGeboortedatum(r.getDate("geboortedatum"));
                         k.setTrainer(r.getBoolean("isTrainer"));
-                        if(r.getObject("ploeg_id")==null)
-                        {
+                        if (r.getObject("ploeg_id") == null) {
                             k.setPloegid(null);
-                        }
-                        else
-                        {
+                        } else {
                             k.setPloegid(r.getInt("ploeg_id"));
                         }
-                        
+
                         sp.add(k);
-                    
-                        
+
                     }
-                   
+
                     return sp;
                 } catch (SQLException sqlEx) {
                     throw new DBException(
@@ -598,6 +761,15 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode geeft een ArrayList terug waarin alle spelers van de
+     * opgegeven ploeg zitten
+     *
+     * @param p de ploeg waarvan je alle spelers wilt opvragen
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public ArrayList<Persoon> zoekSpelersPloeg(Ploeg p) throws DBException, ApplicationException {
 
         ArrayList<Persoon> kl = zoekSpelersPloeg(p.getNaam());
@@ -605,6 +777,15 @@ public class PloegDB {
 
     }
 
+    /**
+     * deze methode geeft een ArrayList terug met alle ploegen die de opgegeven
+     * persoon als trainer hebben
+     *
+     * @param trainer_id het id van de opgegeven persoon
+     * @return
+     * @throws DBException
+     * @throws ApplicationException
+     */
     public ArrayList<Ploeg> zoekPloegenTrainer(int trainer_id) throws DBException, ApplicationException {
         ArrayList<Ploeg> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
@@ -624,7 +805,7 @@ public class PloegDB {
                         k.setNaam(r.getString("naam"));
                         k.setCategorie(r.getString("niveau"));
                         k.setTrainer(r.getInt("trainer_id"));
-                        
+
                         kl.add(k);
                     }
                     return kl;
@@ -641,6 +822,14 @@ public class PloegDB {
         }
     }
 
+    /**
+     * deze methode geeft een ArrayList terug waarin alle ploegen zitten met de opgegeven categorie
+     * 
+     * @param categorie de opgegegeven categorie
+     * @return
+     * @throws ApplicationException
+     * @throws DBException 
+     */
     public ArrayList<Ploeg> zoekPloegenCategorie(Categorie categorie) throws ApplicationException, DBException {
         ArrayList<Ploeg> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
