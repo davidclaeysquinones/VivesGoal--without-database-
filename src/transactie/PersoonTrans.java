@@ -147,9 +147,7 @@ public class PersoonTrans implements PersoonTransInterface {
 
     @Override
     public void checkAlleVeldenIngevuld(Persoon p) throws DBException, ApplicationException {
-//        if (p.getId() == null) {
-//            throw new ApplicationException("Er is geen correcte ID gelinkt aan deze persoon.");
-//        }
+
         if (p.getGeboortedatum() == null) {
             throw new ApplicationException("Gelieve je correcte geboortedatum in te geven.");
         }
