@@ -23,12 +23,14 @@ public class PloegTrans implements PloegTransInterface {
 
     @Override
     public Integer ploegToevoegen(Ploeg p) throws Exception {
-
+//        controleren of het opgegeven ploegobject een categorie heeft
         if (p.getCategorie() == null) {
             throw new ApplicationException("Elke ploeg moet een categorie hebben");
         } else {
             String ploegnaam = genereerPloegNaam(p);
 
+            
+//            controleren of het opgegeven object een trainer heeft
             if (p.getTrainer() != null) {
                 PersoonDB persoonDB = new PersoonDB();
 //                controleren of de opgegeven trainer in de database staat
@@ -39,6 +41,7 @@ public class PloegTrans implements PloegTransInterface {
                     p.setNaam(ploegnaam);
                     database.toevoegenPloeg(p);
 
+//                  retourneren van het id van de toegevoegde ploeg in de database
                     return database.zoekPloeg(p).getId();
                 }
             } else {
@@ -46,6 +49,7 @@ public class PloegTrans implements PloegTransInterface {
                 p.setNaam(ploegnaam);
                 database.toevoegenPloeg(p);
 
+                //             retourneren van het id van de toegevoegde ploeg in de database
                 return database.zoekPloeg(p).getId();
 
             }
@@ -56,8 +60,10 @@ public class PloegTrans implements PloegTransInterface {
 
     @Override
     public void trainerVerwijderenVanPloeg(int ploegId) throws Exception {
+//      het ploegobject ophalen met het opgegeven id
         Ploeg a =database.zoekPloeg(ploegId);
        
+//      controleren of het opgegeven id in de database staat
         if(a!=null)
         {
             database.verwijderTrainerPloeg(ploegId);
@@ -72,7 +78,11 @@ public class PloegTrans implements PloegTransInterface {
     @Override
     public void trainerKoppelenAanPloeg(int trainerId, int ploegId) throws Exception {
         PersoonDB a = new PersoonDB();
+        
+//      persoonobject met het opgegeven trainerid
         Persoon p = a.zoekPersoon(trainerId);
+        
+//      controleren of het opgegeven trainerid bestaat en of die persoon een trainer is
         if (p != null && p.getTrainer() == true) {
             database.toevoegenTrainerPloeg(trainerId, ploegId);
         } else {
@@ -146,6 +156,15 @@ public class PloegTrans implements PloegTransInterface {
         sb.append(p.getCategorie().getTekst());
 //        aantal ploegen binnen de categorie
         int aantal = database.zoekPloegenCategorie(p.getCategorie()).size();
+        
+//      als er meer dan 26 ploegen zijn binnen de categorie zal de naam niet meer juist gegenereerd worden
+//      door de complexiteit van deze methode te laten toenemen kan je dit probleem oplossen
+//      aangezien het onwerkelijk is dat dit probleem zich voordoet in de realiteit
+//      hebben we gekozen om een foutmelding te genereren wanneer dit aantal overschreden wordt
+        if(aantal>26)
+        {
+            throw new ApplicationException("Er kunnen geen ploegen meer toegevoegd worden met deze categorie");
+        }
 //        letter aan StringBuilder afhankelijk van het aantal ploegen binnen de categorie
         sb.append(Character.toString((char) ((char) aantal + 97)));
         return sb.toString();
