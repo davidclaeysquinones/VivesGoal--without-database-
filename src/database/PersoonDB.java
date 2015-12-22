@@ -18,8 +18,7 @@ import java.util.ArrayList;
 /**
  * database functionaliteiten voor spelers
  *
- */ 
- 
+ */
 public class PersoonDB {
 
     public PersoonDB() {
@@ -93,15 +92,12 @@ public class PersoonDB {
                         k.setGeboortedatum(r.getDate("geboortedatum"));
                         k.setTrainer(r.getBoolean("isTrainer"));
                         k.setOpmerking(r.getString("opmerking"));
-                        if(r.getObject("ploeg_id")==null)
-                        {
+                        if (r.getObject("ploeg_id") == null) {
                             k.setPloegid(null);
-                        }
-                        else
-                        {
+                        } else {
                             k.setPloegid(r.getInt("ploeg_id"));
                         }
-                        
+
                         returnPersoon = k;
                     }
 
@@ -145,12 +141,9 @@ public class PersoonDB {
                         k.setGeboortedatum(r.getDate("geboortedatum"));
                         k.setTrainer(r.getBoolean("isTrainer"));
                         k.setOpmerking(r.getString("opmerking"));
-                        if(r.getObject("ploeg_id")==null)
-                        {
+                        if (r.getObject("ploeg_id") == null) {
                             k.setPloegid(null);
-                        }
-                        else
-                        {
+                        } else {
                             k.setPloegid(r.getInt("ploeg_id"));
                         }
                         returnPersoon = k;
