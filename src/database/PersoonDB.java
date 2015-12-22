@@ -23,14 +23,14 @@ public class PersoonDB {
     public PersoonDB() {
 
     }
-
- /**
-  * deze methode retourneert een ArrayList met alle personen die in de database staan
-  * 
-  * @return
-  * @throws DBException
-  * @throws ApplicationException 
-  */
+/**
+     *
+     * @return Geeft een ArrayList weer van alle personen in de database met hun gegevens.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de database leeg is.
+     */
     public ArrayList<Persoon> zoekAllePersonen() throws DBException, ApplicationException {
         ArrayList<Persoon> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
@@ -58,7 +58,9 @@ public class PersoonDB {
                                 kl.add(k);
                             }
 
-                        }  catch (SQLException sqlEx) {
+                        } catch (NullPointerException e) {
+                            throw new ApplicationException("Er werden geen personen gevonden");
+                        } catch (SQLException sqlEx) {
                             throw new DBException(
                                     "SQL-exception in zoekAllePersonen() - resultset" + sqlEx);
                         }
@@ -74,12 +76,14 @@ public class PersoonDB {
     }
 
     /**
-     * deze methode retourneert de gevraagde persoon
+     * zoekt een persoon
      * 
-     * @param id het id van de gebraagde persoon
-     * @return
-     * @throws DBException
-     * @throws ApplicationException 
+     * @param id het id van de persoon die je wilt zoeken
+     * @return  geef een persoon terug met al zijn gegevens.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de persoon niet in de database zit.
      */
     public Persoon zoekPersoon(int id) throws DBException, ApplicationException {
         Persoon returnPersoon = null;
@@ -114,7 +118,9 @@ public class PersoonDB {
                     }
 
                     return returnPersoon;
-                }  catch (SQLException sqlEx) {
+                } catch (NullPointerException e) {
+                    throw new ApplicationException("De opgegeven persoon werd niet gevonden");
+                } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in zoekPersoon(int id) - resultset" + sqlEx);
                 }
             } catch (SQLException sqlEx) {
@@ -127,13 +133,15 @@ public class PersoonDB {
     }
 
     /**
-     * deze methode retourneert de gevraagde persoon
+     * zoekt een persoon.
      * 
-     * @param naam  de naam van de gevraagde persoon
-     * @param voornaam de voornaam van de gevraagde persoon
-     * @return
-     * @throws DBException
-     * @throws ApplicationException 
+     * @param naam de (achter)naam van de te zoeken persoon
+     * @param voornaam de voornaam van de te zoeken persoon
+     * @return  geef een persoon terug met al zijn gegevens.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de persoon niet in de database zit.
      */
     public Persoon zoekPersoon(String naam, String voornaam) throws DBException, ApplicationException {
         Persoon returnPersoon = null;
@@ -169,7 +177,9 @@ public class PersoonDB {
                     }
 
                     return returnPersoon;
-                }  catch (SQLException sqlEx) {
+                } catch (NullPointerException e) {
+                    throw new ApplicationException("Er staat geen persoon in de database met de opgegeven naam en voornaam");
+                } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in zoekPersoon(String naam,String voornaam) - resultset" + sqlEx);
                 }
             } catch (SQLException sqlEx) {
@@ -182,26 +192,29 @@ public class PersoonDB {
     }
 
     /**
-     * deze methode retourneert de gevraagde persoon
-     * om een juist resultaat te bekomen moeten de naam en de voornaam van het opgegeven object ingevuld zijn
+     * zoekt een persoon
      * 
-     * @param p  
-     * @return
-     * @throws DBException
-     * @throws ApplicationException 
+     * @param p een persoonobject van de te zoeken persoon.
+     * @return  geef een persoon terug met al zijn gegevens.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de persoon niet in de database zit.
      */
     public Persoon zoekPersoon(Persoon p) throws DBException, ApplicationException {
         Persoon a = zoekPersoon(p.getNaam(), p.getVoornaam());
         return a;
     }
 
-  /**
-   * deze methode retourneert een ArrayList met alle trainers
-   * 
-   * @return
-   * @throws DBException
-   * @throws ApplicationException 
-   */
+    /**
+     * zoekt alle trainers
+     * 
+     * @return  geeft alle trainers (persoon objecten) weer in een ArrayList.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als er geen trainers in de database aanwezig zijn.
+     */
     public ArrayList<Persoon> zoekAlleTrainers() throws DBException, ApplicationException {
 
         ArrayList<Persoon> kl = new ArrayList<>();
@@ -230,7 +243,9 @@ public class PersoonDB {
                                 kl.add(k);
                             }
 
-                        }  catch (SQLException sqlEx) {
+                        } catch (NullPointerException e) {
+                            throw new ApplicationException("Er werden geen trainers gevonden");
+                        } catch (SQLException sqlEx) {
                             throw new DBException(
                                     "SQL-exception in zoekAlleTrainers - resultset" + sqlEx);
                         }
@@ -245,7 +260,15 @@ public class PersoonDB {
         return kl;
     }
 
-    // debugged method
+    /**
+     * zoekt alle spelers
+     * 
+     * @return  geeft alle spelers (persoon objecten) weer in een ArrayList.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als ergeen spelers in de database aanwezig zijn.
+     */
     public ArrayList<Persoon> zoekAlleSpelers() throws DBException, ApplicationException {
 
         ArrayList<Persoon> kl = new ArrayList<>();
@@ -289,6 +312,13 @@ public class PersoonDB {
 
     }
 
+    /**
+     * verwijdert alle personen in de database
+     * 
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     */
     public void verwijderAllePersonen() throws DBException {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -320,7 +350,15 @@ public class PersoonDB {
         }
     }
 
-    //   debugged method
+    /**
+     * verwijdert een persoon via zijn id.
+     * 
+     * @param id de id van de te verwijderen persoon.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de opgegeven persoon niet aanwezig is in de database.
+     */
     public void verwijderPersoon(int id) throws DBException, ApplicationException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -345,6 +383,8 @@ public class PersoonDB {
                 // execute voert elke sql-statement uit, executeQuery enkel de select
                 stmt.execute();
 
+            } catch (NullPointerException e) {
+                throw new ApplicationException("De opgegeven persoon werd niet gevonden");
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in verwijderPersoon(int id) - statement" + sqlEx);
             }
@@ -355,19 +395,44 @@ public class PersoonDB {
     }
 //   debugged method
 
+    /**
+     * verwijdert een persoon via zijn naam en voornaam.
+     * 
+     * @param naam de naam van de te verwijderen persoon.
+     * @param voornaam de voornaam van de te verwijderen persoon.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de opgegeven persoon niet aanwezig is in de database.
+     */
     public void verwijderPersoon(String naam, String voornaam) throws DBException, ApplicationException {
 
         Persoon a = zoekPersoon(naam, voornaam);
         verwijderPersoon(a.getId());
 
     }
-//   debugged method
-
+    
+/**
+     * verwijdert een persoon via een persoon object.
+     * 
+     * @param p het persoon object van de te verwijderen persoon.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de opgegeven persoon niet aanwezig is in de database.
+     */
     public void verwijderPersoon(Persoon p) throws DBException, ApplicationException {
-        verwijderPersoon(p.getNaam(), p.getVoornaam());
+        verwijderPersoon(p.getId());
     }
 
-    //   debugged method
+    /**
+     * voegt een persoon toe.
+     * 
+     * @param p het toe te voegen persoon object.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     */
     public void toevoegenPersoon(Persoon p) throws DBException {
 
         // connectie tot stand brengen (en automatisch sluiten)
@@ -411,15 +476,19 @@ public class PersoonDB {
 
     }
 
-    //    debugged
     /**
      * Deze methode werkt slechts als het Persoon-Object een correct id heeft (
      * een id dat reeds in de database zit ). Op basis daarvan worden alle
      * opgegeven gegevens gewijzigd
      *
-     * @param p
-     * @throws DBException
-     * @throws ApplicationException
+     * De gegevens van een persoon wijzigen.
+     * 
+     * @param p het persoon object van de te wijzigen persoon.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de persoon niet gewijzigd kon worden doordat de naam 
+     *                              en voornaam reeds aanwezig zijn in de database.
      */
     public void wijzigenPersoon(Persoon p) throws DBException, ApplicationException {
 
@@ -440,7 +509,9 @@ public class PersoonDB {
 
                     // execute voert elke sql-statement uit, executeQuery enkel de select
                     stmt.execute();
-                }  catch (SQLException sqlEx) {
+                } catch (NullPointerException e) {
+                    throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
+                } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                 }
             } else {
@@ -454,6 +525,8 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
+                        } catch (NullPointerException e) {
+                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
                         } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
@@ -467,7 +540,9 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        }  catch (SQLException sqlEx) {
+                        } catch (NullPointerException e) {
+                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
+                        } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
                     }
@@ -481,7 +556,9 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        }  catch (SQLException sqlEx) {
+                        } catch (NullPointerException e) {
+                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
+                        } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
                     }
@@ -494,7 +571,9 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        }  catch (SQLException sqlEx) {
+                        } catch (NullPointerException e) {
+                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
+                        } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
                     }
@@ -509,17 +588,18 @@ public class PersoonDB {
         }
     }
 
-    //   debugged
     /**
      * Deze methode neemt de naam en voornaam van de persoon waarvan je de
      * gegevens wilt wijzigen. Het Persoon object heeft alle gegevens die je
-     * wilt wijzigen
+     * wilt wijzigen.
      *
-     * @param naam
-     * @param voornaam
-     * @param p
-     * @throws DBException
-     * @throws ApplicationException
+     * @param naam naam van de persoon
+     * @param voornaam voornaam van de persoon
+     * @param p Persoon object met alle gegevens die je wilt wijzigen
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de persoon niet gewijzigd kon worden doordat de naam en voornaam reeds aanwezig zijn in de database.
      */
     public void wijzigenPersoon(String naam, String voornaam, Persoon p) throws DBException, ApplicationException {
 
@@ -529,6 +609,16 @@ public class PersoonDB {
 
     }
 
+    /**
+     * kijkt of een persoon bestaat in de database.
+     * 
+     * @param id id van de persoon.
+     * @return geeft true of false terug als de persoon al dan niet bestaat.
+     * @throws DBException Als de database een error geeft, dit kan doordat er geen 
+     *                     connectie gemaakt kan worden, een fout in de ontvangen 
+     *                     data of een fout in de opgegeven query.
+     * @throws ApplicationException Als de persoon niet bestaat.
+     */
     public boolean bestaatPersoon(int id) throws DBException, ApplicationException {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -545,7 +635,9 @@ public class PersoonDB {
                 } else {
                     return false;
                 }
-            }  catch (SQLException sqlEx) {
+            } catch (NullPointerException e) {
+                throw new ApplicationException("De opgegeven persoon werd niet gevonden");
+            } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in bestaatPersoon(Persoon p) - statement" + sqlEx);
             }
 
