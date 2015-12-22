@@ -58,8 +58,6 @@ public class PloegDB {
                     }
 
                     return returnPloeg;
-                } catch (NullPointerException e) {
-                    throw new ApplicationException("De opgegeven id staat niet in de database");
                 } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in zoekPloeg(int id) - resultset" + sqlEx);
                 }
@@ -108,8 +106,6 @@ public class PloegDB {
                     }
 
                     return returnPloeg;
-                } catch (NullPointerException e) {
-                    throw new ApplicationException("De opgegeven ploegnaam staat niet in de database");
                 } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in zoekPloeg(String naam) - resultset" + sqlEx);
                 }
@@ -204,9 +200,7 @@ public class PloegDB {
 
                             }
                             return k;
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("De opgegeven ploeg werd niet gevonden");
-                        } catch (SQLException sqlEx) {
+                        }catch (SQLException sqlEx) {
                             throw new DBException(
                                     "SQL-exception in getTrainer (int ploegid) - resultset" + sqlEx);
                         }
@@ -263,9 +257,7 @@ public class PloegDB {
 
                             }
                             return k;
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("De opgegeven ploeg werd niet gevonden");
-                        } catch (SQLException sqlEx) {
+                        }catch (SQLException sqlEx) {
                             throw new DBException(
                                     "SQL-exception in getTrainer (String ploegnaam) - resultset" + sqlEx);
                         }
@@ -450,8 +442,6 @@ public class PloegDB {
 
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgegeven persoon of ploeg bestaat niet");
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in toevoegenSpelerPloeg(int ploegid, int persoonid) - statement" + sqlEx);
             }
@@ -481,8 +471,6 @@ public class PloegDB {
 
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgegeven persoon of ploeg bestaat niet");
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in toevoegenSpelerPloeg(String naam,PersoonBag p) - statement" + sqlEx);
             }
@@ -524,8 +512,6 @@ public class PloegDB {
 
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De speler werd niet teruggevonden" + e.getMessage());
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in verwijderSpelerPloeg(int id) - statement" + sqlEx);
             }
@@ -579,8 +565,6 @@ public class PloegDB {
 
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgeven persoon of ploeg kon niet worden gevonden");
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in toevoegenTrainerPloeg(int persoonid,int ploegid) - statement" + sqlEx);
             }
@@ -639,8 +623,6 @@ public class PloegDB {
 
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgegeven ploeg werd niet gevonden " + e.getMessage());
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in verwijderTrainerPloeg((int ploegid)) - statement" + sqlEx);
             }
@@ -679,8 +661,6 @@ public class PloegDB {
 
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgegeven ploeg werd niet gevonden " + e.getMessage());
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in verwijderTrainerPloeg((int ploegid)) - statement" + sqlEx);
             }
