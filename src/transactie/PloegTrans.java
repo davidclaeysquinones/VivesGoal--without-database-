@@ -31,6 +31,7 @@ public class PloegTrans implements PloegTransInterface {
 
             if (p.getTrainer() != null) {
                 PersoonDB persoonDB = new PersoonDB();
+//                controleren of de opgegeven trainer in de database staat
                 if (persoonDB.bestaatPersoon(p.getTrainer()) == false) {
                     throw new ApplicationException("De trainer bestaat niet");
 
@@ -55,7 +56,16 @@ public class PloegTrans implements PloegTransInterface {
 
     @Override
     public void trainerVerwijderenVanPloeg(int ploegId) throws Exception {
-        database.verwijderTrainerPloeg(ploegId);
+        Ploeg a =database.zoekPloeg(ploegId);
+       
+        if(a!=null)
+        {
+            database.verwijderTrainerPloeg(ploegId);
+        }
+        else
+        {
+            throw new ApplicationException("de opgegeven ploeg bestaat niet");
+        }
 
     }
 
@@ -142,23 +152,6 @@ public class PloegTrans implements PloegTransInterface {
 
     }
 
-    private String genereerPloegNaamOneindig(Ploeg p) throws Exception {
-        StringBuilder sb = new StringBuilder();
-
-        int aantal = database.zoekPloegenCategorie(p.getCategorie()).size() + 1; //26 + 96 / 2+ 96
-        int a = aantal;
-        while (a > 26) {
-            int r = a % 27; //28%27 = 1
-            r += 97; // 1+97=b
-            sb.insert(0, Character.toString((char) r)); //b
-            a = a / 27;  //28/27=1         
-        }
-        int b = a;
-        b += 96; //97 = a
-        sb.insert(0, Character.toString((char) b));
-        sb.insert(0, p.getCategorie().getTekst());
-
-        return sb.toString();
-    }
+    
 
 }
