@@ -411,7 +411,7 @@ public class PersoonDB {
 
     }
 
-    //    debugged
+    
     /**
      * Deze methode werkt slechts als het Persoon-Object een correct id heeft (
      * een id dat reeds in de database zit ). Op basis daarvan worden alle

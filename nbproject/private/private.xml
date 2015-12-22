@@ -4,11 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/database/PersoonDB.java</file>
+            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/database/ConnectionManager.java</file>
+            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/test/appTest/PersoonTransTest.java</file>
             <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/database/PloegDB.java</file>
-            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/transactie/PersoonTrans.java</file>
-            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/transactie/NewClass.java</file>
-            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/transactie/PloegTrans.java</file>
-            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/test/appTest/PloegTransTest.java</file>
+            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/database/DBProp.java</file>
+            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/test/appTest/TestSuite.java</file>
+            <file>file:/C:/Users/david/Documents/2de%20jaar/Programming%20-%20Practicum/studieprogramma/VivesGoal/src/database/TEST_DB.java</file>
         </group>
     </open-files>
 </project-private>
