@@ -88,7 +88,7 @@ public class PersoonTrans implements PersoonTransInterface {
                         throw new ApplicationException("De opgegeven persoon is reeds een trainer en kan dus niet toegevoegd worden.");
                     } else {
                         //speler toevoegen.
-                        databasePloeg.toevoegenSpelerPloeg(ploegId, ploegId);
+                        databasePloeg.toevoegenSpelerPloeg(spelerId, ploegId);
                     }
                 }
             }
