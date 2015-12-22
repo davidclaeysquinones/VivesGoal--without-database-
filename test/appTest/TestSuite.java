@@ -20,7 +20,7 @@ import org.junit.runners.Suite;
  * @author david
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({appTest.PersoonDBTest.class, appTest.PloegDBTest.class, appTest.PloegTransTest.class})
+@Suite.SuiteClasses({appTest.PersoonDBTest.class, appTest.PloegDBTest.class, appTest.PloegTransTest.class,appTest.PersoonTransTest.class})
 public class TestSuite {
 
     @BeforeClass
