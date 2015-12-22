@@ -6,7 +6,6 @@
 package database;
 
 import databag.Persoon;
-import databag.Ploeg;
 import exception.ApplicationException;
 import exception.DBException;
 import java.sql.Connection;
