@@ -197,6 +197,7 @@ public class PersoonDB {
     }
 
   /**
+   * deze methode retourneert een ArrayList met alle trainers
    * 
    * @return
    * @throws DBException
