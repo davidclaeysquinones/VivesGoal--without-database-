@@ -25,6 +25,13 @@ public class PersoonDB {
 
     }
 
+ /**
+  * deze methode retourneert een ArrayList met alle personen die in de database staan
+  * 
+  * @return
+  * @throws DBException
+  * @throws ApplicationException 
+  */
     public ArrayList<Persoon> zoekAllePersonen() throws DBException, ApplicationException {
         ArrayList<Persoon> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
@@ -67,6 +74,14 @@ public class PersoonDB {
         return kl;
     }
 
+    /**
+     * deze methode retourneert de gevraagde persoon
+     * 
+     * @param id het id van de gebraagde persoon
+     * @return
+     * @throws DBException
+     * @throws ApplicationException 
+     */
     public Persoon zoekPersoon(int id) throws DBException, ApplicationException {
         Persoon returnPersoon = null;
         // connectie tot stand brengen (en automatisch sluiten)
@@ -112,6 +127,15 @@ public class PersoonDB {
         }
     }
 
+    /**
+     * deze methode retourneert de gevraagde persoon
+     * 
+     * @param naam  de naam van de gevraagde persoon
+     * @param voornaam de voornaam van de gevraagde persoon
+     * @return
+     * @throws DBException
+     * @throws ApplicationException 
+     */
     public Persoon zoekPersoon(String naam, String voornaam) throws DBException, ApplicationException {
         Persoon returnPersoon = null;
         // connectie tot stand brengen (en automatisch sluiten)
@@ -158,12 +182,26 @@ public class PersoonDB {
         }
     }
 
+    /**
+     * deze methode retourneert de gevraagde persoon
+     * om een juist resultaat te bekomen moeten de naam en de voornaam van het opgegeven object ingevuld zijn
+     * 
+     * @param p  
+     * @return
+     * @throws DBException
+     * @throws ApplicationException 
+     */
     public Persoon zoekPersoon(Persoon p) throws DBException, ApplicationException {
         Persoon a = zoekPersoon(p.getNaam(), p.getVoornaam());
         return a;
     }
 
-    // debugged method
+  /**
+   * 
+   * @return
+   * @throws DBException
+   * @throws ApplicationException 
+   */
     public ArrayList<Persoon> zoekAlleTrainers() throws DBException, ApplicationException {
 
         ArrayList<Persoon> kl = new ArrayList<>();
