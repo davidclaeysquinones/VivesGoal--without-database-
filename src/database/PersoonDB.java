@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author David
  */
 package database;
 
@@ -58,8 +57,6 @@ public class PersoonDB {
                                 kl.add(k);
                             }
 
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("Er werden geen personen gevonden");
                         } catch (SQLException sqlEx) {
                             throw new DBException(
                                     "SQL-exception in zoekAllePersonen() - resultset" + sqlEx);
@@ -118,9 +115,8 @@ public class PersoonDB {
                     }
 
                     return returnPersoon;
-                } catch (NullPointerException e) {
-                    throw new ApplicationException("De opgegeven persoon werd niet gevonden");
-                } catch (SQLException sqlEx) {
+                } 
+                catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in zoekPersoon(int id) - resultset" + sqlEx);
                 }
             } catch (SQLException sqlEx) {
@@ -177,9 +173,8 @@ public class PersoonDB {
                     }
 
                     return returnPersoon;
-                } catch (NullPointerException e) {
-                    throw new ApplicationException("Er staat geen persoon in de database met de opgegeven naam en voornaam");
-                } catch (SQLException sqlEx) {
+                } 
+                catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in zoekPersoon(String naam,String voornaam) - resultset" + sqlEx);
                 }
             } catch (SQLException sqlEx) {
@@ -243,8 +238,6 @@ public class PersoonDB {
                                 kl.add(k);
                             }
 
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("Er werden geen trainers gevonden");
                         } catch (SQLException sqlEx) {
                             throw new DBException(
                                     "SQL-exception in zoekAlleTrainers - resultset" + sqlEx);
@@ -383,8 +376,6 @@ public class PersoonDB {
                 // execute voert elke sql-statement uit, executeQuery enkel de select
                 stmt.execute();
 
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgegeven persoon werd niet gevonden");
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in verwijderPersoon(int id) - statement" + sqlEx);
             }
@@ -475,8 +466,6 @@ public class PersoonDB {
         }
 
     }
-
-
     /**
      * Deze methode werkt slechts als het Persoon-Object een correct id heeft (
      * een id dat reeds in de database zit ). Op basis daarvan worden alle
@@ -510,8 +499,6 @@ public class PersoonDB {
 
                     // execute voert elke sql-statement uit, executeQuery enkel de select
                     stmt.execute();
-                } catch (NullPointerException e) {
-                    throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
                 } catch (SQLException sqlEx) {
                     throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                 }
@@ -526,8 +513,6 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
                         } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
@@ -541,8 +526,6 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
                         } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
@@ -557,8 +540,6 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
                         } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
@@ -572,8 +553,6 @@ public class PersoonDB {
 
                             // execute voert elke sql-statement uit, executeQuery enkel de select
                             stmt.execute();
-                        } catch (NullPointerException e) {
-                            throw new ApplicationException("De opgegeven persoon kon niet gewijzigd worden " + e.getMessage());
                         } catch (SQLException sqlEx) {
                             throw new DBException("SQL-exception in wijzigenPersoon(PersoonBag p) -sql statement" + sqlEx);
                         }
@@ -636,8 +615,6 @@ public class PersoonDB {
                 } else {
                     return false;
                 }
-            } catch (NullPointerException e) {
-                throw new ApplicationException("De opgegeven persoon werd niet gevonden");
             } catch (SQLException sqlEx) {
                 throw new DBException("SQL-exception in bestaatPersoon(Persoon p) - statement" + sqlEx);
             }
