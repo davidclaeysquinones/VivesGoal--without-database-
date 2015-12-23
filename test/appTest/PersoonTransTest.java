@@ -1,9 +1,8 @@
 package appTest;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author David
  */
 
 import databag.Persoon;
@@ -135,6 +134,7 @@ public class PersoonTransTest {
     }
     
     //speler toevoegen aan ploeg
+    @Test
     public void spelerToevoegenAanPloeg() throws Exception{
         //Persoon aanmaken
         Persoon p = new Persoon();
@@ -152,6 +152,7 @@ public class PersoonTransTest {
     }
     
     //persoon verwijderen
+    @Test
     public void persoonVerwijderen() throws Exception {
         //Persoon aanmaken
         Persoon p = new Persoon();
@@ -164,6 +165,7 @@ public class PersoonTransTest {
     }
     
     //speler wordt trainer
+    @Test
     public void spelerWordtTrainer() throws Exception{
         //Persoon aanmaken
         Persoon p = new Persoon();
@@ -175,38 +177,18 @@ public class PersoonTransTest {
         transactie.spelerWordtTrainer(transactie.persoonToevoegen(p));
     }
     
-    public void spelerWordtSpeler() throws Exception {
-        Persoon p = new Persoon();
-        p.setGeboortedatum(88, 5, 2);
-        p.setNaam("Deboom");
-        p.setVoornaam("Struik");
-        
-        //speler opnieuw speler maken
-        transactie.trainerWordtSpeler(transactie.persoonToevoegen(p));
-    }
-    
     //trainer wordt speler
+    @Test
     public void trainerWordtSpeler() throws Exception{
         //Persoon aanmaken
         Persoon p = new Persoon();
         p.setGeboortedatum(95, 8, 23);
         p.setNaam("De Speler");
         p.setVoornaam("Ronnie");
+        p.setTrainer(true);
         
         //trainer een speler/persoon maken.
         transactie.trainerWordtSpeler(transactie.persoonToevoegen(p));
-    }
-    
-    public void trainerWordtTrainer() throws Exception {
-        //PErsoon aanmaken
-        Persoon p = new Persoon();
-        p.setGeboortedatum(95, 7, 7);
-        p.setNaam("Van Acker");
-        p.setVoornaam("Barry");
-        
-        //trainer wil trainer worden.
-        transactie.trainerWordtSpeler(transactie.persoonToevoegen(p));
-        
     }
 
 }
