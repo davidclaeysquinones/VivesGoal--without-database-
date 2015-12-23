@@ -1,0 +1,24 @@
+Handleiding VivesGoal
+
+1.	Opstarten en gebruik van de applicatie
+•	Om de applicatie te gebruiken maak je gebruik van een MySQL database (bv. usbwebserver) om de data in op te slaan 
+en Netbeans om het programma uit te voeren. Wegens het ontbreken van een grafische user interface in ons programma is het niet 
+mogelijk om het op te starten in een gebruiksvriendelijke interface, hierdoor moet men wel via een mainklasse methoden uitvoeren
+om de verschillende functies te gebruiken.
+
+•	De verschillende testklassen op de transactie laag (JUnit Tests) geven je wel een beeld van wat de applicatie allemaal 
+kan doen en hoe alles in elkaar zit.
+
+2.	Extra functionaliteiten
+•	Het verwijderen van een ploeg: bij het ingeven van een ploeg object zal de ploeg uit de database verwijdert worden. 
+En van alle overblijvende ploegen wordt de naam opnieuw gegenereerd om te zorgen dat er geen fouten optreden bij naamgeving 
+van nieuwe ploegen.
+
+3.	Tekortkomingen/Fouten in de applicatie
+•	Er is een limiet op aantal ploegen binnen een categorie ingesteld, dus vanaf er 26 ploegen binnen éénzelfde categorie zijn
+is het niet meer mogelijk om een nieuwe aan te maken. Dit kon opgelost zijn door een methode te schrijven die de naam verder
+dan ‘z’ genereerd door er een extra letter bij te plaatsen en zo terug van ‘aa’ te beginnen maar aangezien het in praktijk 
+bijna onmogelijk is om 26 ploegen in één categorie te hebben in één voetbalclub hebben we ervoor gekozen dit niet te implementeren.
+
+•	Twee personen met dezelfde naam en voornaam zijn niet toegelaten zodat we personen kunnen selecteren op hun volledige naam 
+zonder dat we meerdere resultaten bekomen.
