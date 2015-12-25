@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `persoon` (
 --
 
 INSERT INTO `persoon` (`id`, `naam`, `voornaam`, `geboortedatum`, `opmerking`, `isTrainer`, `ploeg_id`) VALUES
-(1, 'Claeys', 'David', '1995-08-14', 'Goede trainer, niets op aan te merken', 0, NULL),
-(2, 'Marke', 'Ronnie', '1994-08-14', NULL, 0, NULL),
+(1, 'Claeys', 'David', '1995-08-14', 'Goede trainer, niets op aan te merken', 1, NULL),
+(2, 'Marke', 'Ronnie', '1994-08-14', NULL, 1, NULL),
 (3, 'Claeys', 'Mamina', '1993-08-14', NULL, 0, 1),
 (4, 'Concita', 'Davida', '1992-08-14', NULL, 0, 1),
 (5, 'Claeys', 'Christina', '1991-08-14', NULL, 0, 2),
