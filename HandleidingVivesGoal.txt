@@ -6,6 +6,9 @@ en Netbeans om het programma uit te voeren. Wegens het ontbreken van een grafisc
 mogelijk om te werken in een gebruiksvriendelijke interface, hierdoor moet men via een mainklasse methoden uitvoeren
 om de verschillende functies te kunnen gebruiken.
 
+• De hoofdfunctionaliteiten bevinden zich in de klassen PersoonTrans en PloegTrans. Deze transactieklassen maken gebruik 
+van respectievelijk PersoonDB en PloegDB op databaseniveau. In principe kan je zowel de transactieklassen als de databaseklassen gebruiken om de functionaliteiten te testen maar 
+
 •	De verschillende testklassen in de Test Packages (JUnit Tests) geven je een beeld van wat de applicatie allemaal 
 kan doen en hoe alles in elkaar zit. Indien verdere informatie nodig is kan je altijd de javadoc raadplegen.
 
