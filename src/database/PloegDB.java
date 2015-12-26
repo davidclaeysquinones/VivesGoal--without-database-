@@ -457,8 +457,10 @@ public class PloegDB {
      * @param ploegnaam De ploeg waaraan je een speler wilt koppelen.
      * @param persoon De persoon die je aan een ploeg wilt koppelen.
      * @throws DBException
+     * @throws exception.ApplicationException
+     * 
      */
-    public void toevoegenSpelerPloeg(String ploegnaam, Persoon persoon) throws DBException {
+    public void toevoegenSpelerPloeg(String ploegnaam, Persoon persoon) throws DBException, ApplicationException {
         Persoon p = persoonDB.zoekPersoon(persoon);
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -485,8 +487,9 @@ public class PloegDB {
      * @param ploeg De ploeg waaraan je een speler wilt koppelen.
      * @param speler De persoon die je aan een ploeg wilt koppelen.
      * @throws DBException
+     * @throws exception.ApplicationException
      */
-    public void toevoegenSpelerPloeg(Ploeg ploeg, Persoon speler) throws DBException {
+    public void toevoegenSpelerPloeg(Ploeg ploeg, Persoon speler) throws DBException, ApplicationException {
 
         toevoegenSpelerPloeg(ploeg.getNaam(), speler);
     }
@@ -535,8 +538,9 @@ public class PloegDB {
      * @param naam De naam van de speler die je wilt ontkoppelen
      * @param voornaam De voornaam van de speler die je wilt ontkoppelen
      * @throws DBException
+     * @throws exception.ApplicationException
      */
-    public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException {
+    public void verwijderSpelerPloeg(String naam, String voornaam) throws DBException, ApplicationException {
 
         Persoon p = persoonDB.zoekPersoon(naam, voornaam);
         verwijderSpelerPloeg(p.getId());

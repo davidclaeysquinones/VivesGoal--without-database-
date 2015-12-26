@@ -164,7 +164,7 @@ public class DBfuntionsTest {
             ploegDB.verwijderTrainerPloeg(ploeg.getNaam());
             System.out.println("ontkoppelen trainer van ploeg"+"\n");
         }
-        catch ( DBException|ApplicationException e)
+        catch ( DBException e)
         {
             System.out.println("fout bij ontkoppelen trainer "+e.getMessage());
         }
