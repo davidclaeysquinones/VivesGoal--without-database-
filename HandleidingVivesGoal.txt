@@ -7,7 +7,7 @@ mogelijk om te werken in een gebruiksvriendelijke interface, hierdoor moet men v
 om de verschillende functies te kunnen gebruiken.
 
 •	De verschillende testklassen in de Test Packages (JUnit Tests) geven je een beeld van wat de applicatie allemaal 
-kan doen en hoe alles in elkaar zit.
+kan doen en hoe alles in elkaar zit. Indien verdere informatie nodig is kan je altijd de javadoc raadplegen.
 
 2.	Extra functionaliteiten
 •	Het verwijderen van een ploeg: bij het ingeven van een ploeg object zal de ploeg uit de database verwijdert worden.
