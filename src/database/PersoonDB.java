@@ -477,8 +477,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de persoon niet gewijzigd kon worden doordat de naam 
-     *                              en voornaam reeds aanwezig zijn in de database.
+     * @throws ApplicationException Als de persoon niet gewijzigd kon worden doordat geen enkel
+     *                              gegeven in het Persoon object werd ingevuld
      */
     public void wijzigenPersoon(Persoon p) throws DBException, ApplicationException {
 
@@ -579,8 +579,10 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de persoon niet gewijzigd kon worden doordat de naam en voornaam reeds aanwezig zijn in de database.
+     *  @throws ApplicationException Als de persoon niet gewijzigd kon worden doordat geen enkel
+     *                              gegeven in het Persoon object werd ingevuld
      */
+     
     public void wijzigenPersoon(String naam, String voornaam, Persoon p) throws DBException, ApplicationException {
 
         Persoon a = zoekPersoon(naam, voornaam);
