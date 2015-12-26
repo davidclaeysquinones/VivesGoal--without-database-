@@ -28,9 +28,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de database leeg is.
      */
-    public ArrayList<Persoon> zoekAllePersonen() throws DBException, ApplicationException {
+    public ArrayList<Persoon> zoekAllePersonen() throws DBException {
         ArrayList<Persoon> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager
@@ -80,9 +79,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de persoon niet in de database zit.
      */
-    public Persoon zoekPersoon(int id) throws DBException, ApplicationException {
+    public Persoon zoekPersoon(int id) throws DBException {
         Persoon returnPersoon = null;
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -137,9 +135,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de persoon niet in de database zit.
      */
-    public Persoon zoekPersoon(String naam, String voornaam) throws DBException, ApplicationException {
+    public Persoon zoekPersoon(String naam, String voornaam) throws DBException {
         Persoon returnPersoon = null;
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -194,9 +191,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de persoon niet in de database zit.
      */
-    public Persoon zoekPersoon(Persoon p) throws DBException, ApplicationException {
+    public Persoon zoekPersoon(Persoon p) throws DBException {
         Persoon a = zoekPersoon(p.getNaam(), p.getVoornaam());
         return a;
     }
@@ -208,9 +204,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als er geen trainers in de database aanwezig zijn.
      */
-    public ArrayList<Persoon> zoekAlleTrainers() throws DBException, ApplicationException {
+    public ArrayList<Persoon> zoekAlleTrainers() throws DBException {
 
         ArrayList<Persoon> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
@@ -260,9 +255,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als ergeen spelers in de database aanwezig zijn.
      */
-    public ArrayList<Persoon> zoekAlleSpelers() throws DBException, ApplicationException {
+    public ArrayList<Persoon> zoekAlleSpelers() throws DBException {
 
         ArrayList<Persoon> kl = new ArrayList<>();
         // connectie tot stand brengen (en automatisch sluiten)
@@ -350,9 +344,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de opgegeven persoon niet aanwezig is in de database.
      */
-    public void verwijderPersoon(int id) throws DBException, ApplicationException {
+    public void verwijderPersoon(int id) throws DBException {
 
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
@@ -394,9 +387,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de opgegeven persoon niet aanwezig is in de database.
      */
-    public void verwijderPersoon(String naam, String voornaam) throws DBException, ApplicationException {
+    public void verwijderPersoon(String naam, String voornaam) throws DBException {
 
         Persoon a = zoekPersoon(naam, voornaam);
         verwijderPersoon(a.getId());
@@ -410,9 +402,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de opgegeven persoon niet aanwezig is in de database.
      */
-    public void verwijderPersoon(Persoon p) throws DBException, ApplicationException {
+    public void verwijderPersoon(Persoon p) throws DBException {
         verwijderPersoon(p.getId());
     }
 
@@ -599,9 +590,8 @@ public class PersoonDB {
      * @throws DBException Als de database een error geeft, dit kan doordat er geen 
      *                     connectie gemaakt kan worden, een fout in de ontvangen 
      *                     data of een fout in de opgegeven query.
-     * @throws ApplicationException Als de persoon niet bestaat.
      */
-    public boolean bestaatPersoon(int id) throws DBException, ApplicationException {
+    public boolean bestaatPersoon(int id) throws DBException {
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {
             // preparedStatement opstellen (en automtisch sluiten)
