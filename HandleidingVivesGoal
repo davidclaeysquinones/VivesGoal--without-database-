@@ -6,7 +6,7 @@ en Netbeans om het programma uit te voeren. Wegens het ontbreken van een grafisc
 mogelijk om te werken in een gebruiksvriendelijke interface, hierdoor moet men via een mainklasse methoden uitvoeren
 om de verschillende functies te kunnen gebruiken.
 
-•	De verschillende testklassen in de Test Libraries (JUnit Tests) geven je wel een beeld van wat de applicatie allemaal 
+•	De verschillende testklassen in de Test Libraries (JUnit Tests) geven je een beeld van wat de applicatie allemaal 
 kan doen en hoe alles in elkaar zit.
 
 2.	Extra functionaliteiten
