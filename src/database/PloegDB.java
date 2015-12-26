@@ -32,7 +32,7 @@ public class PloegDB {
      * @throws DBException
      * @throws ApplicationException
      */
-    public Ploeg zoekPloeg(int id) throws DBException, ApplicationException {
+    public Ploeg zoekPloeg(int id) throws DBException, ApplicationException  {
         Ploeg returnPloeg = null;
         // connectie tot stand brengen (en automatisch sluiten)
         try (Connection conn = ConnectionManager.getConnection();) {

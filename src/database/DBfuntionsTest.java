@@ -89,7 +89,7 @@ public class DBfuntionsTest {
             trainer=persoonDB.zoekAlleTrainers();
             System.out.println("Spelers en trainers opslaan in apparte ArrayList"+"\n");
         }
-        catch(DBException | ApplicationException  e1)
+        catch(DBException   e1)
         {
             System.out.println("fout bij ophalen gegevens"+e1.getMessage());
         }
@@ -114,7 +114,7 @@ public class DBfuntionsTest {
             System.out.println("\n"+"instellen trainer"+"\n");
                   
         }
-        catch ( DBException|ApplicationException e)
+        catch ( DBException e)
         {
             System.out.println("fout bij opzoeken trainer "+e.getMessage());
         }
@@ -220,7 +220,7 @@ public class DBfuntionsTest {
                 System.out.println("verwijderen spelers"+"\n");
             }
         }
-        catch(DBException|ApplicationException e1   )
+        catch(DBException e1   )
         {
             System.out.println("fout bij verwijderen speler"+e1.getMessage());
         }  
@@ -241,7 +241,7 @@ public class DBfuntionsTest {
             }
             
         }
-        catch(DBException|ApplicationException   e1)
+        catch(DBException  e1)
         {
             System.out.println("fout bij verwijderen trainer"+e1.getMessage());
         }
