@@ -7,7 +7,8 @@ mogelijk om te werken in een gebruiksvriendelijke interface, hierdoor moet men v
 om de verschillende functies te kunnen gebruiken.
 
 • De hoofdfunctionaliteiten bevinden zich in de klassen PersoonTrans en PloegTrans. Deze transactieklassen maken gebruik 
-van respectievelijk PersoonDB en PloegDB op databaseniveau. In principe kan je zowel de transactieklassen als de databaseklassen gebruiken om de functionaliteiten te testen maar 
+van respectievelijk PersoonDB en PloegDB op databaseniveau. In principe kan je zowel de transactieklassen als de databaseklassen gebruiken om de functionaliteiten te testen maar de databaseklassen voeren geen enkele controle uit op de invoer van de gegevens.
+Door dit gebrek aan controle kunnen bepaalde fouten gemaakt worden, dus raden we het rechtstreeks gebruik van de databaseklassen af.
 
 •	De verschillende testklassen in de Test Packages (JUnit Tests) geven je een beeld van wat de applicatie allemaal 
 kan doen en hoe alles in elkaar zit. Indien verdere informatie nodig is kan je altijd de javadoc raadplegen.
