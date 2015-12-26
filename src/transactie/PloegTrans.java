@@ -49,7 +49,7 @@ public class PloegTrans implements PloegTransInterface {
                 p.setNaam(ploegnaam);
                 database.toevoegenPloeg(p);
 
-                //             retourneren van het id van de toegevoegde ploeg in de database
+ //             retourneren van het id van de toegevoegde ploeg in de database
                 return database.zoekPloeg(p).getId();
 
             }
@@ -163,7 +163,7 @@ public class PloegTrans implements PloegTransInterface {
 //      hebben we gekozen om een foutmelding te genereren wanneer dit aantal overschreden wordt
         if(aantal>26)
         {
-            throw new ApplicationException("Er kunnen geen ploegen meer toegevoegd worden met deze categorie");
+            throw new ApplicationException("Er kunnen geen ploegen meer toegevoegd worden binnen deze categorie");
         }
 //        letter aan StringBuilder afhankelijk van het aantal ploegen binnen de categorie
         sb.append(Character.toString((char) ((char) aantal + 97)));
